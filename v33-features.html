@@ -6,10 +6,13 @@
 <title>a-blog cms Training Camp 2026 ｜ v3.3 プロジェクトの機能紹介</title>
 <style>
   :root {
-    --navy: #1b2a41;
-    --navy-2: #2c3e5c;
-    --accent: #f2711c;
-    --accent-soft: #fff1e6;
+    --navy: #3a3a3a;
+    --navy-2: #5a6168;
+    --accent: #2f6fad;
+    --accent-soft: #eaf2fa;
+    --warn: #e07b2c;
+    --warn-soft: #fdf1e6;
+    --dot: #86aad3;
     --red: #d64545;
     --red-soft: #fdecec;
     --green: #2f9e6e;
@@ -18,7 +21,7 @@
     --text: #1f2937;
     --muted: #6b7280;
     --line: #e5e7eb;
-    --bg: #ffffff;
+    --bg: #f7f7f7;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; background: #0e1626; }
@@ -66,8 +69,7 @@
   .tag.cfg { background: var(--blue-soft); color: var(--navy-2); }
   code, .code { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
 
-  .slide.cover { background: #f5f5f5; padding: 0; align-items: center; justify-content: center; }
-  .slide.cover img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .slide.cover { background: #f3f3f3; padding: 0; align-items: center; justify-content: center; }
   .slide.cover .pageno { display: none; }
 
   /* ---- title slide ---- */
@@ -242,6 +244,149 @@
   .cu-warn { color: var(--red); }
   .cu-box .checks li { font-size: 14px; padding-left: 22px; }
 
+  /* ---- visual: before/after rows + target tags (vz-*) ---- */
+  .vz-ba { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+  .vz-ba-row { display: flex; align-items: center; gap: 14px; border-radius: 12px; padding: 11px 20px; font-size: 19px; }
+  .vz-ba-row.vz-bad { background: var(--red-soft); }
+  .vz-ba-row.vz-good { background: var(--green-soft); }
+  .vz-ba-label { width: 150px; font-weight: 800; color: var(--navy); font-size: 17px; }
+  .vz-chip { background: #fff; border-radius: 8px; padding: 6px 14px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .vz-arr { color: var(--accent); font-weight: 900; }
+  .vz-res { font-weight: 800; }
+  .vz-bad .vz-res { color: var(--red); }
+  .vz-good .vz-res { color: var(--green); }
+  .vz-targets { display: grid; grid-template-columns: 1.9fr 0.9fr 1.1fr; gap: 16px; }
+  .vz-tg { border-radius: 12px; padding: 16px 18px; }
+  .vz-tg-ok { background: var(--blue-soft); }
+  .vz-tg-ex { background: var(--accent-soft); }
+  .vz-tg-no { background: #f3f4f6; }
+  .vz-tg-h { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 12px; }
+  .vz-tg p { font-size: 16px; line-height: 1.6; }
+  .vz-tags { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+  .vz-tags li { background: #fff; border-radius: 999px; padding: 5px 14px; font-size: 16px; font-weight: 700; }
+  .vz-tg-no .vz-tags li { color: var(--muted); }
+
+  /* generic visual blocks */
+  .vz-cols { display: grid; gap: 18px; grid-template-columns: repeat(2, 1fr); align-items: stretch; }
+  .vz-cols.c3 { grid-template-columns: repeat(3, 1fr); }
+  .vz-cols.c4 { grid-template-columns: repeat(4, 1fr); }
+  .vz-card { border-radius: 14px; padding: 18px 22px; background: var(--blue-soft); }
+  .vz-card.warm { background: var(--accent-soft); }
+  .vz-card.bad { background: var(--red-soft); }
+  .vz-card.good { background: var(--green-soft); }
+  .vz-card.gray { background: #f3f4f6; }
+  .vz-card.line { background: #fff; border: 2px solid var(--line); }
+  .vz-card-h { font-size: 20px; font-weight: 800; color: var(--navy); margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+  .vz-card-h .tag { font-size: 13px; }
+  .vz-card-sub { font-size: 15px; color: var(--muted); margin: -4px 0 12px; }
+  .vz-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .vz-list li { position: relative; padding-left: 26px; font-size: 17px; line-height: 1.5; }
+  .vz-list li::before { content: "●"; position: absolute; left: 4px; top: 1px; font-size: 11px; color: var(--accent); }
+  .vz-list.ck li::before { content: "✓"; left: 0; top: 0; font-size: 17px; font-weight: 900; color: var(--green); }
+  .vz-list.x li::before { content: "✕"; left: 0; top: 0; font-size: 17px; font-weight: 900; color: var(--red); }
+  .vz-list.warn li::before { content: "!"; left: 4px; top: 0; font-size: 17px; font-weight: 900; color: var(--accent); }
+  .vz-list small { font-size: 14px; color: var(--muted); }
+  .vz-rule { background: var(--navy); color: #fff; border-radius: 12px; padding: 14px 22px; font-size: 18px; line-height: 1.5; margin-top: 18px; }
+  .vz-rule b { color: #ffd2b0; }
+  .vz-flow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; font-size: 18px; }
+  .vz-kv { display: flex; flex-direction: column; border-top: 2px solid var(--navy); }
+  .vz-kv > div { display: grid; grid-template-columns: 200px 1fr; gap: 16px; padding: 8px 6px; border-bottom: 1px solid var(--line); font-size: 17px; line-height: 1.5; align-items: baseline; }
+  .vz-kv > div > b:first-child { color: var(--navy); font-size: 16px; }
+  .vz-big { font-size: 40px; font-weight: 900; color: var(--accent); line-height: 1.1; }
+  .slide .vz-card code, .slide .vz-kv code, .slide .vz-list code { font-size: .92em; background: rgba(27,42,65,.07); padding: 1px 5px; border-radius: 4px; }
+  .vz-mt { margin-top: 18px; }
+
+  .vz-ver { display: flex; gap: 8px; align-items: center; margin: 6px 0 14px; }
+  .vz-ver span { flex: 1; text-align: center; font-weight: 800; font-size: 18px; padding: 10px 0; border-radius: 8px; background: var(--green); color: #fff; }
+  .vz-ver span.off { background: #e5e7eb; color: #9ca3af; text-decoration: line-through; }
+  .vz-pill { display: inline-block; background: #fff; border-radius: 8px; padding: 5px 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); font-weight: 700; }
+
+  .vz-box { border: 2px dashed var(--navy-2); border-radius: 10px; padding: 26px 12px 10px; position: relative; background: #fff; }
+  .vz-box-l { position: absolute; top: 4px; left: 10px; font-size: 13px; font-weight: 700; color: var(--navy-2); font-family: "SFMono-Regular", Menlo, monospace; }
+  .vz-box.hl { border-color: var(--accent); background: #fffbe6; }
+  .vz-blk { background: var(--blue-soft); border-radius: 6px; padding: 5px 10px; margin-top: 6px; font-size: 14px; }
+  .vz-row { display: flex; gap: 8px; }
+  .vz-row > .vz-box { flex: 1; }
+  .vz-warn { background: var(--accent-soft); border-left: 6px solid var(--accent); border-radius: 8px; padding: 12px 18px; font-size: 17px; line-height: 1.5; margin-top: 16px; }
+
+  .vz-node { background: #fff; border: 2px solid var(--navy-2); border-radius: 12px; padding: 12px 18px; font-size: 18px; font-weight: 800; color: var(--navy); text-align: center; }
+  .vz-node.hl { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .vz-node small { display: block; font-size: 13px; font-weight: 400; color: inherit; opacity: .8; }
+  .vz-grid { border-collapse: collapse; font-size: 14px; width: 100%; }
+  .vz-grid th, .vz-grid td { border: 1px solid #cbd5e1; padding: 5px 8px; background: #fff; }
+  .vz-grid th { background: var(--navy-2); color: #fff; font-size: 13px; }
+  .vz-grid td.edit { outline: 2px solid var(--accent); outline-offset: -2px; background: #fffbe6; }
+
+  .vz-stats { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .vz-stat { background: var(--blue-soft); border-radius: 12px; padding: 14px 10px; text-align: center; }
+  .vz-stat b { display: block; font-size: 32px; font-weight: 900; color: var(--navy); line-height: 1.2; }
+  .vz-stat span { font-size: 14px; color: var(--muted); }
+
+  /* rows: label + content, no colored boxes */
+  .vz-rows { border-top: 2px solid var(--navy); }
+  .vz-rows > div { display: grid; grid-template-columns: 220px 1fr; gap: 18px; padding: 11px 6px; border-bottom: 1px solid var(--line); align-items: center; }
+  .vz-rows > div > .k { font-size: 17px; font-weight: 800; color: var(--navy); }
+  .vz-rows > div > .k.warn { color: var(--red); }
+  .vz-rows > div > .v { font-size: 17px; line-height: 1.55; }
+  .vz-rows .vz-tags li { background: var(--blue-soft); font-size: 15px; padding: 4px 12px; }
+  .vz-rows .vz-list li { font-size: 16px; }
+  .vz-rows .vz-pill { box-shadow: none; background: var(--blue-soft); }
+  .vz-rows small { font-size: 14px; color: var(--muted); }
+  .vz-h3 { font-size: 19px; font-weight: 800; color: var(--navy); margin: 18px 0 8px; }
+  .vz-h3:first-child { margin-top: 0; }
+  /* comparison table */
+  .vz-cmp { width: 100%; border-collapse: collapse; }
+  .vz-cmp th { font-size: 18px; color: var(--navy); font-weight: 800; text-align: left; padding: 8px 14px; border-bottom: 2px solid var(--navy); }
+  .vz-cmp th:first-child { width: 180px; }
+  .vz-cmp td { font-size: 17px; line-height: 1.5; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .vz-cmp td:first-child { font-weight: 800; color: var(--navy); font-size: 16px; }
+  /* numbered steps (horizontal) */
+  .vz-steps { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 0; counter-reset: st; }
+  .vz-steps > div { counter-increment: st; position: relative; padding: 0 22px 0 0; }
+  .vz-steps > div::before { content: counter(st); display: flex; width: 34px; height: 34px; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 800; align-items: center; justify-content: center; margin-bottom: 10px; }
+  .vz-steps > div:not(:last-child)::after { content: ""; position: absolute; top: 17px; left: 44px; right: 10px; border-top: 2px dashed #cbd5e1; }
+  .vz-steps .t { font-size: 18px; font-weight: 800; color: var(--navy); margin-bottom: 6px; }
+  .vz-steps .d { font-size: 16px; line-height: 1.55; }
+
+  .vz-cmp .vz-grid th { font-size: 13px; color: #fff; padding: 5px 8px; border: 1px solid #cbd5e1; width: auto; }
+  .vz-cmp .vz-grid td { font-size: 14px; font-weight: 400; color: var(--text); padding: 5px 8px; border: 1px solid #cbd5e1; }
+
+  /* ---- theme: match the cover (light gray, charcoal, blue, halftone dots) ---- */
+  .slide { overflow: hidden; }
+  .slide > *:not(.pageno):not(.notes) { position: relative; z-index: 1; }
+  .slide::after, .slide.dark::before, .slide.cover::before {
+    content: ""; position: absolute; z-index: 0; pointer-events: none; border-radius: 50%;
+    background-image: radial-gradient(circle, var(--dot) 1.7px, transparent 2.2px); background-size: 8px 8px;
+  }
+  .slide::after { width: 440px; height: 440px; right: -260px; top: -260px; opacity: .55;
+    -webkit-mask-image: radial-gradient(circle, transparent 48%, #000 56%, rgba(0,0,0,.35) 66%, transparent 72%);
+            mask-image: radial-gradient(circle, transparent 48%, #000 56%, rgba(0,0,0,.35) 66%, transparent 72%); }
+  .slide.dark::after, .slide.cover::after { width: 760px; height: 760px; right: -380px; top: -420px; opacity: 1; }
+  .slide.dark::before, .slide.cover::before { width: 760px; height: 760px; left: -420px; bottom: -430px;
+    -webkit-mask-image: radial-gradient(circle, transparent 46%, #000 54%, rgba(0,0,0,.35) 64%, transparent 71%);
+            mask-image: radial-gradient(circle, transparent 46%, #000 54%, rgba(0,0,0,.35) 64%, transparent 71%); }
+  .slide.dark { background: #f3f3f3; color: var(--text); }
+  .dark .lead, .title-wrap .sub, .title-meta, .ag-d, .sum .d, .rn-sub { color: var(--muted); }
+  .title-meta b, .ag-t, .sum .t { color: var(--navy); }
+  .ag-item, .sum { background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+  .dark .pageno { color: var(--muted); }
+  .rn-link a, .slide a, .slide.dark a { color: var(--accent); }
+  .vz-rule b { color: #a9cdf0; }
+  .vz-warn { background: var(--warn-soft); border-left-color: var(--warn); }
+  .vz-list.warn li::before { color: var(--warn); }
+  .vz-box.hl { background: var(--accent-soft); }
+  .vz-chip, .vz-pill { background: #fff; }
+  /* cover */
+  .cv { display: flex; flex-direction: column; align-items: center; text-align: center; color: #3a3a3a; }
+  .cv-logo { height: 44px; width: auto; margin-bottom: 20px; }
+  .cv-event { font-size: 22px; font-weight: 700; letter-spacing: .14em; color: var(--muted); }
+  .cv-ver { font-family: "Helvetica Neue", "Arial", sans-serif; font-weight: 500; font-size: 176px; line-height: 1; letter-spacing: .02em; margin-top: 8px; }
+  .cv-ver span { font-size: 86px; letter-spacing: 0; margin-right: 6px; }
+  .cv-line { width: 460px; border-top: 1.5px solid #3a3a3a; margin: 26px 0 24px; }
+  .cv-sub { display: flex; align-items: center; gap: 14px; font-size: 34px; font-weight: 700; letter-spacing: .06em; color: var(--accent); }
+  .cv-sub svg { width: 44px; height: 44px; }
+  .cv-meta { margin-top: 26px; font-size: 18px; color: var(--muted); letter-spacing: .04em; }
+
   /* ---- nav ---- */
   #nav { position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; align-items: center; z-index: 10; }
   #nav button { background: rgba(255,255,255,.12); color: #fff; border: 0; border-radius: 6px; padding: 6px 14px; font-size: 14px; cursor: pointer; }
@@ -267,8 +412,14 @@
 
 <!-- 1 Cover -->
 <section class="slide cover">
-  <img src="assets/event-thumb.png" alt="a-blog cms Training Camp 2026　11.13（金）13:00 - 18:00　NAGOYA">
-  <aside class="notes" data-time="0:20"><p>皆さん、こんにちは。a-blog cms の開発チームです。</p><p>今日は、v3.3 プロジェクトで決めた次のバージョンの機能と、v3.3 に向けて v3.2 で先に入れた改善についてお話しします。</p></aside>
+  <div class="cv">
+    <img class="cv-logo" src="assets/acms-logo.png" alt="a-blog cms">
+    <div class="cv-event">TRAINING CAMP 2026</div>
+    <div class="cv-ver"><span>Ver.</span>3.3</div>
+    <div class="cv-line"></div>
+    <div class="cv-sub"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M16 12v21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M17 13h12l-3 5 3 5H17z" fill="currentColor"/></svg>プロジェクトの機能紹介</div>
+    <div class="cv-meta">2026.11.13（金）13:00 - 18:00　NAGOYA</div>
+  </div>
   <div class="pageno"></div>
 </section>
 
@@ -282,7 +433,6 @@
     <div class="ag-item"><div class="badge">3</div><div><div class="ag-t">v3.3 の新機能</div><div class="ag-d">カスタムフィールド定義・REST API・ログインの守り・リダイレクトなど</div></div></div>
     <div class="ag-item"><div class="badge">4</div><div><div class="ag-t">まとめ</div><div class="ag-d">いまからできる準備</div></div></div>
   </div>
-  <aside class="notes" data-time="0:25"><p>今日の内容は 4 つです。まず v3.3 のプロジェクトについて、次に v3.2 で先に入れた改善、そして v3.3 の新機能、最後にまとめです。</p><p><b>v3.2 の話はすでに使える内容、v3.3 の話は開発中の内容です。</b>この違いを意識して聞いていただけると分かりやすいと思います。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -298,7 +448,6 @@
       <div><b>2027 春ごろ</b>正式リリース（未定）</div>
     </div>
   </div>
-  <aside class="notes" data-time="0:25"><p><b>v3.3 の正式リリースは、2027 年の春ごろを考えています。時期はまだ決まっていません。</b></p><p>今日 11 月 13 日にアルファ版を出し、1 月から 2 月末までに機能を凍結します。</p><p>v3.3 では、入れる機能を最初に決めて、その一つひとつをしっかり仕上げることに集中しています。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -306,14 +455,13 @@
 <section class="slide">
   <div class="kicker">1. v3.3 のプロジェクトについて ｜ ポイント</div>
   <h2>機能はバージョンの役割に照らして、どの版に入れるかを決めた</h2>
-  <table class="rn-table">
-    <tr><th style="width:110px">版</th><th>役割</th><th style="width:420px">本日紹介する機能</th></tr>
-    <tr><td class="rn-ver">v3.2</td><td>当たり前の品質の底上げ。早く出せる軽い改善を束ねる</td><td>ライブラリの更新と PHP 8.5 対応／メールの Twig／管理画面の改善／ブロックの追加（グループ・埋め込み・HTML）／CSV でのメディア取り込み</td></tr>
-    <tr><td class="rn-ver">v3.3</td><td>戦略の本丸。AI エージェントから操作できる CMS（REST API）とコンテンツ管理の強化</td><td>カスタムフィールド定義／REST API／ログインの守り（メール認証・パスキー）／リダイレクト管理 など</td></tr>
+  <table class="vz-cmp">
+    <tr><th style="width:110px">版</th><th style="width:330px">役割</th><th>本日紹介する主な機能</th></tr>
+    <tr><td>v3.2</td><td>当たり前の品質の底上げ<br><small style="color:var(--muted)">軽い改善を先に出す</small></td><td>PHP 8.5 対応・メールの Twig・管理画面の改善・グループ／埋め込み／HTML ブロック・CSV でのメディア取り込み・公式 Agent Skills</td></tr>
+    <tr><td>v3.3</td><td>戦略の本丸<br><small style="color:var(--muted)">AI から操作できる CMS とコンテンツ管理</small></td><td>カスタムフィールド定義・REST API・パスキー・メール認証・リダイレクト管理・一括編集 など</td></tr>
   </table>
-  <div class="callout nb-note"><b>判断のルール</b>：v3.3 のコンセプトを前に進める機能は v3.3 へ。地味でも「当たり前」に必要な改善は v3.2 で先に出す。</div>
-  <div class="note">本日は、v3.2・v3.3 で進めている 18 の機能を紹介します。</div>
-  <aside class="notes" data-time="0:50"><p>機能をどのバージョンに入れるかは、バージョンごとの役割に照らして決めました。</p><p>v3.2 の役割は「当たり前の品質の底上げ」です。早く出せる軽い改善を束ねて、先に出しています。</p><p>v3.3 の役割は「戦略の本丸」です。<b>AI エージェントから操作できる CMS、つまり REST API と、コンテンツ管理の強化</b>を進めます。</p><p>下の「判断のルール」のとおり、v3.3 のコンセプトを前に進める機能は v3.3 へ、地味でも当たり前に必要な改善は v3.2 で先に出す、と決めています。</p><p>v3.2 と v3.3 を合わせて 18 の機能を紹介します。</p></aside>
+  <div class="vz-rule"><b>判断のルール</b>　コンセプトを前に進める機能 → v3.3 ／ 地味でも当たり前に必要な改善 → v3.2 で先に</div>
+  <div class="vz-flow vz-mt"><span class="vz-big">18</span><span>の機能を紹介します（v3.2：9・v3.3：9）</span></div>
   <div class="pageno"></div>
 </section>
 
@@ -333,7 +481,6 @@
     <tr><td>8</td><td><b>CSV インポートでのメディア取り込み</b>（プロフェッショナル以上）</td><td>CMS-7715</td><td><span class="tag ok">リリース済み</span> v3.2.36</td></tr>
     <tr><td>9</td><td><b>公式 Agent Skills の配布</b></td><td>CMS-7716</td><td><span class="tag ok">公開済み</span> GitHub（最新は v0.1.1）</td></tr>
   </table>
-  <aside class="notes" data-time="1:05"><p>まず v3.2 の機能です。<b>9 個のうち 8 個は、v3.2.25 から v3.2.36 ですでにリリースしています。</b></p><p>公式 Agent Skills も、10 月 30 日に GitHub で公開しました。</p><p>順に読み上げます。1 つ目、ライブラリの更新と PHP 8.5 対応。2 つ目、メールテンプレートの Twig 対応。3 つ目、エントリー管理のタグ絞り込みとサブカテゴリー対応。4 つ目、作成後に、作成したデータの編集画面へ移動。5 つ目から 7 つ目は、ブロックエディターのグループブロック、埋め込みブロック、HTML ブロック。8 つ目、CSV インポートでのメディア取り込み。こちらはプロフェッショナル以上の機能です。9 つ目が、公式 Agent Skills の配布です。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -348,13 +495,12 @@
     <tr><td>12</td><td><b>REST API</b>（AI からの操作に対応）</td><td>CMS-7717</td><td><span class="tag cfg">アルファ版に取り込み済み</span></td></tr>
     <tr><td>13</td><td><b>Custom Field Editor</b>（表形式の一括編集）</td><td>CMS-7718</td><td><span class="tag bug">未着手（計画）</span></td></tr>
     <tr><td>14</td><td><b>カテゴリーの CSV インポート</b></td><td>CMS-7723</td><td><span class="tag bug">未着手（計画）</span></td></tr>
-    <tr><td>15</td><td><b>二段階認証にメール認証を追加</b></td><td>CMS-7726</td><td><span class="tag cfg">アルファ版に取り込み済み</span></td></tr>
-    <tr><td>16</td><td><b>パスキー（WebAuthn）でのログイン</b></td><td>CMS-7730</td><td><span class="tag cfg">アルファ版に取り込み済み</span></td></tr>
+    <tr><td>15</td><td><b>パスキー（WebAuthn）でのログイン</b></td><td>CMS-7730</td><td><span class="tag cfg">アルファ版に取り込み済み</span></td></tr>
+    <tr><td>16</td><td><b>二段階認証にメール認証を追加</b></td><td>CMS-7726</td><td><span class="tag cfg">アルファ版に取り込み済み</span></td></tr>
     <tr><td>17</td><td><b>管理画面でのリダイレクト管理</b></td><td>CMS-7728</td><td><span class="tag cfg">アルファ版に取り込み済み</span></td></tr>
     <tr><td>18</td><td><b>ユーザー・カテゴリー一覧の React 化</b></td><td>CMS-7727</td><td><span class="tag bug">未着手（計画）</span></td></tr>
   </table>
   <div class="note">v3.3 の機能は、正式リリースまでに仕様が変わることがあります。</div>
-  <aside class="notes" data-time="0:35"><p>続いて v3.3 の 9 個の機能です。</p><p>Ping 送信の廃止、メールの二段階認証、パスキー、リダイレクト管理は、すでにアルファ版に取り込んでいます。</p><p><b>本丸のカスタムフィールドの定義と REST API も、アルファ版に取り込んでいます。</b>9 個のうち 6 個がアルファ版に入っていて、残りの 3 つは計画の段階です。</p><p><b>v3.3 の内容は、正式リリースまでに変わることがあります。</b>その前提で聞いてください。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -366,12 +512,11 @@
     <div class="sub">リリース済みの機能は、v3.2 系の最新版（v3.2.39）で使えます</div>
     <div class="title-meta">
       <div><b>土台</b>ライブラリ更新・PHP 8.5</div>
-      <div><b>管理画面</b>絞り込み・作成後の遷移</div>
+      <div><b>管理画面</b>エントリー管理の絞り込み・作成後の遷移</div>
       <div><b>入力</b>グループ・埋め込み・HTML ブロック</div>
       <div><b>移行</b>CSV でのメディア取り込み</div>
     </div>
   </div>
-  <aside class="notes" data-time="0:25"><p>ここから 2 章、v3.2 で先に入れた改善です。</p><p>v3.3 を待たずに、毎日の運用でつまずきやすい所から直しました。土台、管理画面、入力、移行の 4 つに分けて紹介します。</p><p><b>リリース済みの機能は、v3.2 系の最新版、v3.2.39 ですぐに使えます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -379,25 +524,11 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 1 ｜ ライブラリの更新と PHP 対応</div>
   <h2>ライブラリを更新し、PHP 8.5 でも動くようにした</h2>
-  <div class="points" style="flex:0;align-items:start">
-    <div class="panel cool">
-      <h3>v3.2：PHP 8.1〜8.5（v3.2.27 から）</h3>
-      <ul class="checks">
-        <li><b>問題</b>：PHP 8.4 のサポート終了に備え、新しい PHP でも動くことを保証し続ける必要がある。これまでは 8.5 では起動しなかった</li>
-        <li><b>対応</b>：使っている各種ライブラリを新しい版に更新し、PHP 8.5 で動くようにした。動作範囲は <b>PHP 8.1 以上 8.6 未満</b></li>
-        <li><b>必要な作業</b>：v3.2.27 以降に更新するだけ</li>
-      </ul>
-    </div>
-    <div class="panel warm">
-      <h3>v3.3：PHP 8.3〜8.5</h3>
-      <ul class="checks">
-        <li>v3.3 では PHP 8.1・8.2 のサポートを終え、<b>PHP 8.3 以上 8.6 未満</b>で動かす</li>
-        <li>v3.2 系を使っている間は、これまでどおり PHP 8.1〜8.5 で動く</li>
-        <li>v3.3 に上げる前に、サーバーの PHP を 8.3 以上にしておく</li>
-      </ul>
-    </div>
-  </div>
-  <aside class="notes" data-time="0:50"><p>まずは土台の更新です。</p><p>PHP 8.4 のサポート終了に備える必要があります。これまでの版は、PHP 8.5 では起動しませんでした。</p><p>そこで、使っている各種ライブラリを新しい版に更新し、<b>v3.2.27 から PHP 8.5 でも動くようにしました。</b>v3.2 系で動く PHP は 8.1 から 8.5 で、更新するだけで使えます。</p><p><b>v3.3 からは、動く PHP が 8.3 から 8.5 になります。</b>v3.2 系を使っている間は、これまでどおり 8.1 から使えます。v3.3 に上げる前に、サーバーの PHP を 8.3 以上にしておいてください。</p></aside>
+  <table class="vz-cmp">
+    <tr><th style="width:230px"></th><th>動く PHP</th><th style="width:380px">やること</th></tr>
+    <tr><td>v3.2（v3.2.27 から）</td><td><div class="vz-ver" style="margin:0"><span>8.1</span><span>8.2</span><span>8.3</span><span>8.4</span><span>8.5</span></div></td><td>更新するだけ</td></tr>
+    <tr><td>v3.3</td><td><div class="vz-ver" style="margin:0"><span class="off">8.1</span><span class="off">8.2</span><span>8.3</span><span>8.4</span><span>8.5</span></div></td><td><b>上げる前に、サーバーの PHP を 8.3 以上に</b></td></tr>
+  </table>
   <div class="pageno"></div>
 </section>
 
@@ -405,53 +536,42 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 2 ｜ メールテンプレートの Twig 対応</div>
   <h2>メールの文面も、公開側のテーマと同じ Twig で書ける</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">公開側・管理画面は Twig で書けるのに、メールだけは従来の a-blog cms 独自の記法のままだった。条件分岐やループも書きにくい</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">テーマで Twig を有効にしていれば、<b>メールテンプレートを Twig で書ける</b>。フォームの自動返信・管理者宛、会員登録・パスワード再設定、承認通知、コメント通知などが対象</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">お問い合わせの種別ごとに自動返信の文面を変える。公開側と同じ部品を include して、署名やフッターを共通にする</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">v3.2.24 まで</span><span class="vz-chip">公開側・管理画面：Twig</span><span class="vz-chip">メール：独自の記法だけ</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.25 から</span><span class="vz-chip">テーマで Twig を有効</span><span class="vz-arr">→</span><span class="vz-res">✓ メールも Twig で書ける</span></div>
   </div>
-  <table class="pk-table">
-    <tr><th>項目</th><th>仕様</th></tr>
-    <tr><td>ファイルの探し方</td><td><code>body.txt</code> を指定すると <code>body.txt.twig</code> を先に探す（HTML メールは <code>body.twig</code> → <code>body.html.twig</code> → <code>body.html</code>）</td></tr>
-    <tr><td>値の出し方</td><td>公開側と同じ形。<code>{{ name.value }}</code>、複数値は <code>{{ name.array }}</code></td></tr>
-    <tr><td>管理画面での直接入力</td><td>Twig を使えるが、安全のため <code>if</code>・<code>for</code>・<code>set</code>・<code>block</code> など一部のタグに限る（<code>extends</code> は不可）</td></tr>
-    <tr><td>エラーのとき</td><td>警告をログに残し、Twig を通さずに従来の処理で送る</td></tr>
-    <tr><td>注意</td><td>Twig を有効にしたテーマでは、拡張子が <code>.twig</code> でないメールテンプレートも Twig として処理される。本文に <code>{{</code> や <code>{%</code> がないか確認する</td></tr>
-  </table>
-  <aside class="notes" data-time="1:00"><p>次は、メールテンプレートの Twig 対応です。</p><p>公開側や管理画面のテンプレートは Twig で書けるのに、メールだけは従来の a-blog cms 独自の書き方のままででした。</p><p>v3.2.25 から、テーマで Twig を有効にしていれば、フォームの自動返信や会員登録のメールなども Twig で書けます。値の出し方は公開側と同じです。お問い合わせの種類ごとに自動返信の文面を変えたり、公開側と同じ部品を読み込んで署名を共通にしたりできます。</p><p><b>注意点として、Twig を有効にしたテーマでは、拡張子が .twig でないメールテンプレートも Twig として処理されます。</b>本文に波かっこが入っていないか確認してください。</p></aside>
+  <div class="vz-rows">
+    <div><span class="k">対象のメール</span><span class="v"><ul class="vz-tags"><li>フォームの自動返信・管理者宛</li><li>会員登録</li><li>パスワード再設定</li><li>承認通知</li><li>コメント通知 など</li></ul></span></div>
+    <div><span class="k">ファイルの探し方</span><span class="v"><code>body.txt.twig</code> → <code>body.txt</code>　<small>（HTML：<code>body.twig</code> → <code>body.html.twig</code> → <code>body.html</code>）</small><br><b>どれが使われても、中身は Twig で処理</b></span></div>
+    <div><span class="k">値の出し方</span><span class="v">公開側と同じ <code>{{ name.value }}</code>・<code>{{ name.array }}</code></span></div>
+    <div><span class="k">管理画面での直接入力</span><span class="v">一部のタグだけ（<code>if</code>・<code>for</code> など。<code>extends</code> は不可）</span></div>
+    <div><span class="k">エラーのとき</span><span class="v">ログに警告を残し、従来の処理で送る</span></div>
+    <div><span class="k warn">注意</span><span class="v">既存の本文に <code>{{</code> <code>{%</code> を文字として書いていないか確認</span></div>
+  </div>
   <div class="pageno"></div>
 </section>
 
 <!-- 7 F1 tag filter -->
 <section class="slide">
-  <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 3 ｜ タグ絞り込み・サブカテゴリー対応（1/2）</div>
-  <h2>タグやサブカテゴリーでも、管理画面で記事を絞り込める</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">エントリー管理の絞り込みはカテゴリー・ステータス・期間・ユーザーなどだけ。タグで分類しているサイトでは記事を探せなかった。サブカテゴリーに入れた記事もカテゴリー絞り込みに出なかった</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">「高度な絞り込み」に<b>タグ</b>を追加。カテゴリーで絞り込むと、<b>サブカテゴリーに入れたエントリーも</b>表示されるようにした</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">メディアサイトで「特集タグ」の記事だけを点検する。複数のカテゴリーにまたがる記事（例：イベント × 地域）を、どちらのカテゴリーからでも一覧にする</div></div>
+  <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 3 ｜ エントリー管理の絞り込み（1/2）</div>
+  <h2>エントリー管理で、タグやサブカテゴリーでも記事を絞り込める</h2>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">v3.2.26 まで</span><span class="vz-chip">カテゴリー</span><span class="vz-chip">ステータス</span><span class="vz-chip">期間</span><span class="vz-chip">ユーザー</span><span class="vz-res">✕ タグでは探せない</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.27 から</span><span class="vz-chip"><b>＋ タグ</b></span><span class="vz-chip"><b>＋ サブカテゴリーの記事</b></span><span class="vz-res">✓ 準備なしで使える</span></div>
   </div>
-  <table class="pk-table">
-    <tr><th>項目</th><th>仕様</th></tr>
-    <tr><td>タグの選び方</td><td>複数選択できる。<b>選んだタグをすべて持つ</b>エントリーに絞る（AND）</td></tr>
-    <tr><td>タグの候補</td><td>タグを選ぶと、そのタグと一緒に使われているタグだけが候補に残る（ゴミ箱のエントリーは除く）</td></tr>
-    <tr><td>カテゴリー絞り込み</td><td>メインカテゴリーに加えてサブカテゴリーも対象。「子カテゴリーを含む」ときはサブカテゴリー側も子孫まで含める。同じ記事は 1 回だけ表示</td></tr>
-    <tr><td>必要な準備</td><td>なし（v3.2.27 以降に更新すれば使える）</td></tr>
-  </table>
-  <aside class="notes" data-time="0:45"><p>ここからは管理画面の改善です。</p><p>タグで記事を分類しているサイトでは、これまでエントリー管理でタグの絞り込みができませんでした。サブカテゴリーに入れた記事も、カテゴリーの絞り込みには出ませんでした。</p><p><b>v3.2.27 から、「高度な絞り込み」でタグを選べます。</b>複数選ぶと、すべてのタグを持つ記事に絞り込みます。タグを選ぶと、そのタグと一緒に使われているタグだけが候補に残るので、絞り込みやすくなっています。</p><p>カテゴリーで絞り込んだときは、サブカテゴリーに入れた記事も出ます。準備は不要で、更新すれば使えます。</p></aside>
+  <div class="vz-rows">
+    <div><span class="k">タグで絞り込む</span><span class="v"><span class="vz-pill">ペット可</span> ＋ <span class="vz-pill">オートロック</span> <span class="vz-arr">→</span> <b>両方を持つ記事</b></span></div>
+    <div><span class="k">タグの候補</span><span class="v">選んだタグと一緒に使われているタグだけが残る</span></div>
+    <div><span class="k">カテゴリーで絞り込む</span><span class="v">メインカテゴリーに加えて、<b>サブカテゴリーに入れた記事も</b>出る（同じ記事は 1 回だけ）</span></div>
+  </div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
-  <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 3 ｜ タグ絞り込み・サブカテゴリー対応（2/2）</div>
-  <h2>タグを選ぶと、一緒に使われているタグだけが候補に残る</h2>
-  <div class="sc-grid sc-2" style="grid-template-columns: 0.9fr 1.1fr;"><div class="nb-shot"><div class="nb-cap"><b>① タグを選ぶ</b>：「高度な絞り込み」の「タグ」で「ペット可」を選ぶと、候補が一緒に使われているタグだけになる</div><img src="assets/v33-features/tag-filter-01-candidates.png?v=2" alt="タグ欄でペット可を選び、候補のタグが一覧になっている画面"></div><div class="nb-shot"><div class="nb-cap"><b>② 検索する</b>：「ペット可」のタグを持つエントリーに絞り込まれた</div><img src="assets/v33-features/tag-filter-02-result.png" alt="ペット可のタグで絞り込んだエントリーの一覧"></div></div>
+  <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 3 ｜ エントリー管理の絞り込み（2/2）</div>
+  <h2>エントリー管理で、一緒に使われているタグだけが候補に残る</h2>
+  <div class="sc-grid sc-2" style="grid-template-columns: 0.9fr 1.1fr;"><div class="nb-shot"><div class="nb-cap"><b>① タグを選ぶ</b>：「ペット可」を選ぶと、一緒に使われているタグだけが候補に</div><img src="assets/v33-features/tag-filter-01-candidates.png?v=2" alt="タグ欄でペット可を選び、候補のタグが一覧になっている画面"></div><div class="nb-shot"><div class="nb-cap"><b>② 検索する</b>：「ペット可」のエントリーだけが並ぶ</div><img src="assets/v33-features/tag-filter-02-result.png" alt="ペット可のタグで絞り込んだエントリーの一覧"></div></div>
   <div class="note">画面：v3.2 系のローカル環境（バージョン定数 3.2.39）。データはサンプルです。</div>
-  <aside class="notes" data-time="0:25"><p>実際の画面です。エントリー管理の「高度な絞り込み」に、タグの欄が増えています。</p><p>「ペット可」を選ぶと、候補が、ペット可と一緒に使われているタグだけになります。</p><p><b>検索すると、ペット可のタグを持つ記事だけが並びます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -459,30 +579,25 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 4 ｜ 作成後に編集画面へ移動（1/2）</div>
   <h2>作成後は編集画面へ進むので、同じものを二重に作らない</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">作成後も、入力内容が残ったままの<b>新規作成画面</b>に留まっていた。編集画面と思って直して保存すると、もう 1 件作成されてしまう。リロードでも再送信されうる</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">作成に成功したら、<b>作成したデータの編集画面へリダイレクト</b>する（PRG：Post → Redirect → Get）。失敗したときは従来どおり入力値を残して作成画面を表示</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">カテゴリーを作ってすぐ詳細を設定する。a-blog cms に慣れていない運用担当者が、意図しないデータを作ってしまうのを防ぐ</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">v3.2.28 まで</span><span class="vz-chip">作成</span><span class="vz-arr">→</span><span class="vz-chip">新規作成画面のまま</span><span class="vz-arr">→</span><span class="vz-res">✕ 直して押すと、もう 1 件できる</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.29 から</span><span class="vz-chip">作成</span><span class="vz-arr">→</span><span class="vz-chip"><b>作成したものの編集画面</b></span><span class="vz-arr">→</span><span class="vz-res">✓ 二重に作らない</span></div>
   </div>
-  <table class="pk-table">
-    <tr><th>項目</th><th>仕様</th></tr>
-    <tr><td>対象の画面</td><td>カテゴリー・ユーザー・フォームに加え、Webhook・コンフィグセット・エイリアス・ロール・ユーザーグループ・スケジュール・ルール・ショートカット</td></tr>
-    <tr><td>完了メッセージ</td><td>URL のパラメータではなく 1 回だけ表示するメッセージにした。リロードしても「作成しました」が出続けない</td></tr>
-    <tr><td>ブログだけ例外</td><td>今のブログの編集画面に留まり、メッセージ内のリンクから新しいブログへ移動する（別ドメインのブログへ移るとログインが切れるため）</td></tr>
-    <tr><td>必要な準備</td><td>なし（v3.2.29 以降）</td></tr>
-  </table>
-  <aside class="notes" data-time="0:50"><p>次は、作成した後の画面の移動です。</p><p>これまでは、カテゴリーなどを作成した後も、入力内容が残ったまま新規作成の画面に留まっていました。そのまま直して保存すると、もう 1 件作られてしまっていました。</p><p><b>v3.2.29 からは、作成すると、そのデータの編集画面に移動します。</b>リロードしても二重に登録されず、「作成しました」のメッセージも 1 回だけ出ます。</p><p>カテゴリー、ユーザー、フォームのほか、Webhook やロールなど多くの画面が対象です。ブログだけは、別のドメインのブログに移るとログインが切れるため、今の画面に留まり、メッセージのリンクから移動します。</p></aside>
+  <div class="vz-rows">
+    <div><span class="k">✓ 移動する</span><span class="v"><ul class="vz-tags"><li>カテゴリー</li><li>ユーザー</li><li>ユーザーグループ</li><li>ロール</li><li>フォーム</li><li>ルール</li><li>エイリアス</li><li>ショートカット</li><li>スケジュール</li><li>Webhook</li><li>コンフィグセット</li></ul></span></div>
+    <div><span class="k">△ ブログ</span><span class="v">今の画面に留まり、メッセージのリンクから移動</span></div>
+    <div><span class="k">↪ 以前から移動</span><span class="v"><ul class="vz-tags"><li>エントリー</li><li>モジュール ID</li></ul></span></div>
+    <div><span class="k">✕ 移動しない</span><span class="v">「カテゴリー追加」のモーダル（作成すると閉じて、選択欄に反映）</span></div>
+  </div>
+  <div class="note">準備は不要（v3.2.29 以降に更新すれば使える）。コンフィグセットにはテーマセット・編集画面セットを含む。</div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 4 ｜ 作成後に編集画面へ移動（2/2）</div>
   <h2>作成した直後の画面を、以前と比べる</h2>
-  <div class="sc-grid sc-2" style="grid-template-columns: 1fr 1fr;"><div class="nb-shot"><div class="nb-cap"><b>以前（v3.2.28 まで）</b>：作成しても新規作成の画面のまま。ボタンは「作成」で、押し直すともう 1 件できる</div><img src="assets/v33-features/after-create-01-old.png?v=2" alt="カテゴリーを作成した直後も、作成ボタンのある新規作成画面に留まっている"></div><div class="nb-shot"><div class="nb-cap"><b>v3.2.29 以降</b>：作成したカテゴリーの編集画面へ移る。ボタンは「保存」「削除」になり、パンくずにカテゴリー名が出る</div><img src="assets/v33-features/after-create-02-new.png?v=2" alt="カテゴリーを作成した直後に、そのカテゴリーの編集画面へ移っている"></div></div>
+  <div class="sc-grid sc-2" style="grid-template-columns: 1fr 1fr;"><div class="nb-shot"><div class="nb-cap"><b>v3.2.28 まで</b>：新規作成の画面のまま。ボタンは「作成」</div><img src="assets/v33-features/after-create-01-old.png?v=2" alt="カテゴリーを作成した直後も、作成ボタンのある新規作成画面に留まっている"></div><div class="nb-shot"><div class="nb-cap"><b>v3.2.29 から</b>：編集画面へ移る。ボタンは「保存」「削除」</div><img src="assets/v33-features/after-create-02-new.png?v=2" alt="カテゴリーを作成した直後に、そのカテゴリーの編集画面へ移っている"></div></div>
   <div class="note">画面：左は v3.2.28 相当、右は v3.2 系（バージョン定数 3.2.39）のローカル環境。データはサンプルです。</div>
-  <aside class="notes" data-time="0:40"><p>実際の画面で、以前と比べます。どちらも、カテゴリーを作成した直後の画面です。</p><p>左が v3.2.28 までの動きです。「作成しました」と出ますが、新規作成の画面のままで、ボタンも「作成」のままです。ここで直して押すと、もう 1 件できてしまいます。</p><p><b>右が v3.2.29 以降です。作成したカテゴリーの編集画面に移り、ボタンも「保存」と「削除」に変わります。</b>パンくずにも、作ったカテゴリーの名前が出ます。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -490,33 +605,15 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 5 ｜ グループブロック（1/5）</div>
   <h2>複数のブロックを 1 つにまとめ、見た目を付けられる</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">ブロックエディターでは、複数のブロックをまとめて背景色や余白を付ける手段がなく、レイアウトの表現が限られていた</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">ブロックを包む<b>グループブロック</b>を追加。HTML 要素・スタイル（class）・背景色を選べる。グループの中にグループやカラムも入れられる</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">記事の途中に背景色付きの「お知らせ」枠を作る。テーマで用意したスタイル（囲み・強調など）を、運用者は選ぶだけで使う</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-res">✕ 複数のブロックに、まとめて背景色や余白を付けられない</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.36 から</span><span class="vz-res">✓ グループで囲んで、見た目を選ぶ</span></div>
   </div>
-  <div class="points" style="flex:0">
-    <div class="panel warm nb-panel">
-      <h3>グループにする方法</h3>
-      <ul class="checks">
-        <li>複数のブロックを選び、ツールバーの「グループ化」</li>
-        <li>スラッシュコマンド <code>/group</code>、または挿入メニュー（レイアウト）</li>
-        <li>ショートカット：<code>Mod+G</code> でグループ化、<code>Mod+Shift+G</code> で解除</li>
-      </ul>
-    </div>
-    <div class="panel cool nb-panel">
-      <h3>グループを選んだときの設定（ツールバー）</h3>
-      <ul class="checks">
-        <li><b>HTML 要素</b>：div・section・aside など</li>
-        <li><b>スタイル</b>：管理画面で定義した class から選ぶ</li>
-        <li><b>背景色</b>：カラーパレットから選ぶ</li>
-        <li>section・aside・nav のときは aria-label を入力できる</li>
-      </ul>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">グループにする</span><span class="v">ツールバーの「グループ化」・<code>/group</code>・挿入メニュー・<code>Mod+G</code>　<small>（解除は <code>Mod+Shift+G</code>）</small></span></div>
+    <div><span class="k">選べる見た目</span><span class="v"><ul class="vz-tags"><li>HTML 要素（div・section・aside など）</li><li>スタイル（class）</li><li>背景色</li><li>読み上げ用のラベル</li></ul></span></div>
+    <div><span class="k">例</span><span class="v">記事の途中に、背景色の付いた「お知らせ」の枠を作る</span></div>
   </div>
-  <aside class="notes" data-time="0:50"><p>ここからはブロックエディターです。まずグループブロックです。</p><p>これまでは、複数のブロックをまとめて、背景色や余白を付ける手段がありませんでした。</p><p><b>グループブロックを使うと、複数のブロックを 1 つにまとめて、HTML の要素、スタイル、背景色を選べます。</b>まとめるには、ブロックを選んで「グループ化」を押すほか、スラッシュコマンドの /group、挿入メニュー、ショートカットも使えます。section や aside を選んだときは、読み上げ用のラベルも入れられます。</p><p>たとえば記事の途中に、背景色の付いたお知らせの枠を作れます。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -525,51 +622,28 @@
   <h2>ブロックを選んで「グループ化」し、ツールバーで見た目を選ぶ</h2>
   <div style="display:grid; grid-template-columns: 700px 1fr; gap: 20px; flex: 1; min-height: 0; align-items: start;">
     <div class="nb-side">
-      <div class="nb-shot"><div class="nb-cap"><b>① 選んでグループ化</b>：段落を 3 つ選び、ツールバーの「グループ化」を押す（⌘G でも可）</div><img src="assets/v33-features/group-01-select.png" alt="3 つの段落を選び、ツールバーのグループ化ボタンにカーソルを合わせた画面"></div>
-      <div class="nb-shot"><div class="nb-cap"><b>③ できあがり</b>：aside 要素・黄色の背景で、3 つの段落が 1 つの枠になった</div><img src="assets/v33-features/group-03-result.png" alt="3 つの段落が黄色い背景の枠にまとまった画面"></div>
+      <div class="nb-shot"><div class="nb-cap"><b>① 選んでグループ化</b>：段落を選び「グループ化」（⌘G）</div><img src="assets/v33-features/group-01-select.png" alt="3 つの段落を選び、ツールバーのグループ化ボタンにカーソルを合わせた画面"></div>
+      <div class="nb-shot"><div class="nb-cap"><b>③ できあがり</b>：3 つの段落が 1 つの枠に</div><img src="assets/v33-features/group-03-result.png" alt="3 つの段落が黄色い背景の枠にまとまった画面"></div>
     </div>
-    <div class="nb-shot"><div class="nb-cap"><b>② 見た目を選ぶ</b>：グループのツールバーで HTML 要素・スタイル・背景色を選ぶ</div><img src="assets/v33-features/group-02-html-element.png" alt="グループのツールバーで HTML 要素のメニューを開き、div・section・aside が並んでいる画面"></div>
+    <div class="nb-shot"><div class="nb-cap"><b>② 見た目を選ぶ</b>：要素・スタイル・背景色</div><img src="assets/v33-features/group-02-html-element.png" alt="グループのツールバーで HTML 要素のメニューを開き、div・section・aside が並んでいる画面"></div>
   </div>
   <div class="note">画面：v3.2.38（ローカル環境）。HTML 要素とスタイルの選択肢はブロックエディター設定で変わります。</div>
-  <aside class="notes" data-time="0:30"><p>実際の画面です。段落を 3 つ選ぶと、ツールバーに「グループ化」のボタンが出ます。ショートカットの ⌘G でもまとめられます。</p><p>グループを選ぶと、ツールバーで HTML の要素、スタイル、背景色を選べます。ここでは aside と黄色の背景を選びました。</p><p><b>選んだ見た目は、編集画面でもそのまま確かめられます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 5 ｜ グループブロック（3/5）</div>
   <h2>グループは「囲む」、カラムは「横に並べる」</h2>
-  <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-    <div class="panel warm" style="padding:16px 20px">
-      <h3 style="font-size:18px; margin-bottom:10px">グループブロックの HTML</h3>
-      <div class="codebox" style="font-size:13px">&lt;aside data-type="group" data-tag="aside" <span class="cm">← 要素を選べる</span>
-  class="（選んだスタイル）"
-  style="background-color: #fffb8b"
-  aria-label="お知らせ"&gt;
-  &lt;p&gt;年末年始の営業について&lt;/p&gt;  <span class="cm">← ブロックが直接入る</span>
-  &lt;p&gt;12月28日から1月4日まで休業します。&lt;/p&gt;
-&lt;/aside&gt;</div>
-    </div>
-    <div class="panel cool" style="padding:16px 20px">
-      <h3 style="font-size:18px; margin-bottom:10px">カラムブロックの HTML</h3>
-      <div class="codebox" style="font-size:13px">&lt;div data-type="columns" <span class="cm">← 常に div</span>
-  data-layout="two-column"
-  class="layout-two-column"&gt;
-  &lt;div data-type="column" data-position=""&gt; <span class="cm">← 列ごとの箱</span>
-    &lt;p&gt;左の列&lt;/p&gt;
-  &lt;/div&gt;
-  &lt;div data-type="column" data-position=""&gt;…&lt;/div&gt;
-&lt;/div&gt;</div>
-    </div>
-  </div>
-  <table class="pk-table" style="margin-top:14px">
+  <table class="vz-cmp">
     <tr><th></th><th>グループブロック</th><th>カラムブロック</th></tr>
-    <tr><td>役割</td><td>複数のブロックを 1 つの枠で<b>囲む</b></td><td>ブロックを 1〜3 列に<b>横に並べる</b></td></tr>
-    <tr><td>外側の要素</td><td>設定した要素から選ぶ（既定は div・section・aside）</td><td>常に div</td></tr>
-    <tr><td>中の構造</td><td>ブロックが直接入る</td><td>列（column）の箱が 1〜3 個入り、その中にブロック</td></tr>
-    <tr><td>見た目の決め方</td><td>スタイル（class）と背景色を選ぶ</td><td>列数（layout-two-column など）で CSS グリッドが決まる</td></tr>
+    <tr><td>形</td>
+      <td><div class="vz-box hl" style="max-width:360px"><span class="vz-box-l">&lt;aside&gt; など</span><div class="vz-blk">段落</div><div class="vz-blk">段落</div></div></td>
+      <td><div class="vz-box" style="max-width:360px"><span class="vz-box-l">&lt;div&gt;</span><div class="vz-row"><div class="vz-box"><span class="vz-box-l">列</span><div class="vz-blk">段落</div></div><div class="vz-box"><span class="vz-box-l">列</span><div class="vz-blk">段落</div></div></div></div></td></tr>
+    <tr><td>役割</td><td>まとめて<b>囲む</b></td><td>横に<b>並べる</b>（1〜3 列）</td></tr>
+    <tr><td>外側の要素</td><td>選べる（div・section・aside など）</td><td>常に div</td></tr>
+    <tr><td>見た目</td><td>スタイル（class）と背景色</td><td>列の数で CSS グリッドが決まる</td></tr>
   </table>
-  <div class="note">グループとカラムは互いに入れ子にできる（例：カラムの各列にグループを入れて、背景付きのカードを横に並べる）。HTML は主な属性だけを抜粋。</div>
-  <aside class="notes" data-time="0:45"><p>ここで、よく似たカラムブロックとの違いを整理します。</p><p><b>グループは複数のブロックを 1 つの枠で囲むもの、カラムはブロックを横に並べるものです。</b></p><p>HTML を見ると違いが分かります。グループは、外側の要素を aside や section から選べて、その中にブロックが直接入ります。</p><p>カラムは、外側が常に div で、その中に列ごとの箱が入ります。列の数で CSS のグリッドが決まります。</p><p>この 2 つは入れ子にできるので、カラムの各列にグループを入れて、背景付きのカードを横に並べることもできます。</p></aside>
+  <div class="note">2 つは入れ子にできる（例：カラムの各列にグループを入れ、背景付きのカードを横に並べる）。</div>
   <div class="pageno"></div>
 </section>
 
@@ -577,31 +651,25 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 5 ｜ グループブロック（4/5）</div>
   <h2>選べる要素とスタイルは、ブロックエディター設定で決める</h2>
-  <div class="pk-steps">
-    <div class="panel cool">
-      <h3>ブロックエディター設定に増えた項目</h3>
-      <table class="pk-table">
-        <tr><td>グループブロック HTML要素</td><td>既定は div・section・aside。div・section・article・aside・header・footer・nav から選ぶ（main は不可）</td></tr>
-        <tr><td>グループブロック クラス</td><td>ラベル・class・説明・アイコンを登録。「一発グループ化」を有効にするとワンクリックでグループ化できる</td></tr>
-        <tr><td>背景色の表示</td><td>ツールバーに背景色を出すか（既定は表示）</td></tr>
-      </table>
-    </div>
-    <div class="panel warm">
-      <h3>既存サイトでの準備</h3>
-      <div class="callout">新規インストールでは最初からブロックメニューに入っています。ブロックエディター設定を保存済みのサイトは、<b>ブロックメニューに「グループ」を追加</b>してください。余白や囲みの見た目は、テーマの CSS で class を用意します。</div>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">HTML 要素</span><span class="v"><span class="vz-pill">div</span> <span class="vz-pill">section</span> <span class="vz-pill">aside</span>（既定）＋ article・header・footer・nav も選べる</span></div>
+    <div><span class="k">クラス</span><span class="v">ラベルと class を登録。<b>「一発グループ化」</b>でワンクリックでグループ化</span></div>
+    <div><span class="k">背景色</span><span class="v">ツールバーに出すかどうか（既定は表示）</span></div>
   </div>
-  <div class="note">対象：v3.2.36 以降。出力される HTML は前のスライドを参照。</div>
-  <aside class="notes" data-time="0:45"><p>選べる HTML の要素とスタイルは、管理者がブロックエディターの設定で決めます。</p><p>要素は、既定では div、section、aside の 3 つで、article や header なども足せます。スタイルは、ラベルと class を登録します。「一発グループ化」を有効にすると、ワンクリックでグループ化できます。</p><p>テーマで囲みや強調のスタイルを用意しておけば、運用する方は選ぶだけで使えます。</p><p><b>ブロックエディターの設定を保存している既存のサイトでは、ブロックメニューに「グループ」を追加してください。</b></p></aside>
+  <div class="vz-steps vz-mt" style="margin-top:26px">
+    <div><div class="t">制作者</div><div class="d">テーマの CSS で、囲み・強調などの class を用意</div></div>
+    <div><div class="t">管理者</div><div class="d">ブロックエディター設定に class を登録</div></div>
+    <div><div class="t">運用する人</div><div class="d">ツールバーで選ぶだけ</div></div>
+  </div>
+  <div class="vz-warn"><b>既存のサイト</b>：ブロックエディター設定を保存済みなら、ブロックメニューに「グループ」を追加</div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 5 ｜ グループブロック（5/5）</div>
   <h2>選べる要素とスタイルは、設定の画面で登録する</h2>
-  <div class="sc-grid"><div class="nb-shot" style="max-width: 1000px;"><div class="nb-cap"><b>ブロックエディター設定</b>：「グループブロック HTML要素」で選べる要素を並べ、「グループブロック クラス」でスタイル（class・ラベル・説明・一発グループ化・アイコン）を登録する</div><img src="assets/v33-features/group-settings.png" alt="ブロックエディター設定のグループブロック HTML要素とグループブロック クラスの欄"></div></div>
+  <div class="sc-grid"><div class="nb-shot" style="max-width: 1000px;"><div class="nb-cap"><b>ブロックエディター設定</b>：上で要素を並べ、下でスタイル（class）を登録</div><img src="assets/v33-features/group-settings.png" alt="ブロックエディター設定のグループブロック HTML要素とグループブロック クラスの欄"></div></div>
   <div class="note">画面：v3.2 系のローカル環境（バージョン定数 3.2.39）。データはサンプルです。</div>
-  <aside class="notes" data-time="0:30"><p>こちらが設定の画面です。上の「グループブロック HTML要素」に、ツールバーで選べる要素を並べます。既定では div、section、aside の 3 つです。</p><p>下の「グループブロック クラス」で、スタイルの class とラベルを登録します。<b>「一発グループ化」を有効にすると、ワンクリックでグループ化できます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -609,40 +677,23 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 6 ｜ 埋め込みブロック（1/3）</div>
   <h2>URL を入れるだけで、動画や SNS の投稿を記事に埋め込める</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">動画・SNS・地図などの外部サービスを埋め込むには、埋め込み用の HTML を手で貼る必要があった。HTML に慣れていない運用者には難しい</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d"><b>埋め込みブロック</b>を追加。URL を確定するとサーバーが oEmbed・OGP で情報を取り、プレビューを表示する。許可していないサービスはカード表示になる</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">イベント報告に動画を入れる。SNS の投稿を引用する。許可していないサイトの URL でも、タイトルと画像のカードで見栄えよく紹介する</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-res">✕ 埋め込み用の HTML を手で貼る</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.36 から</span><span class="vz-chip">URL を入れる</span><span class="vz-arr">→</span><span class="vz-chip">確定</span><span class="vz-arr">→</span><span class="vz-res">✓ プレビューが出る</span></div>
   </div>
-  <div class="points" style="flex:0">
-    <div class="panel warm nb-panel">
-      <h3>操作の流れ</h3>
-      <ol class="steps">
-        <li><span>挿入メニューから「埋め込み」を追加</span></li>
-        <li><span>ブロック内の入力欄に URL を入れて確定 → プレビュー</span></li>
-        <li><span>ツールバーで配置・表示サイズ・キャプション・新しいタブで開く を調整</span></li>
-      </ol>
-    </div>
-    <div class="panel cool nb-panel">
-      <h3>うまくいかないとき</h3>
-      <ul class="checks">
-        <li>取得に失敗したら「再試行」「リンクに変換」「URLを変更」を選べる</li>
-        <li>「通常のリンクにする」で、URL のリンクを入れた段落に戻せる</li>
-      </ul>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">ツールバーで調整</span><span class="v">配置・表示サイズ・キャプション・新しいタブで開く</span></div>
+    <div><span class="k">取得に失敗したら</span><span class="v">再試行・URL を変更・リンクに変換</span></div>
+    <div><span class="k">例</span><span class="v">イベントの報告に動画を入れる／SNS の投稿を引用する</span></div>
   </div>
-  <aside class="notes" data-time="0:40"><p>次は埋め込みブロックです。</p><p>動画や SNS、地図を記事に入れるには、これまで埋め込み用の HTML を手で貼る必要がありました。</p><p><b>埋め込みブロックでは、URL を入れて確定するだけで、プレビューが表示されます。</b>配置や表示サイズ、キャプションは、ツールバーで調整します。</p><p>取得に失敗したときは、再試行するか、URL を変えるか、通常のリンクに変えられます。イベントの報告に動画を入れたり、SNS の投稿を引用したりするときに便利です。</p></aside>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 6 ｜ 埋め込みブロック（2/3）</div>
   <h2>URL を入れて「埋め込む」を押すと、編集画面でプレビューされる</h2>
-  <div class="sc-grid sc-2" style="grid-template-columns: 1fr 1fr;"><div class="nb-side"><div class="nb-shot"><div class="nb-cap"><b>① URL を入れる</b>：埋め込みブロックに URL を入れて「埋め込む」を押す。ツールバーで配置・キャプション・表示サイズを選べる</div><img src="assets/v33-features/embed-01-input.png?v=2" alt="埋め込みブロックの URL 入力欄に https://a-blogcms.jp を入れた画面"></div><div class="nb-shot"><div class="nb-cap"><b>② サイトの URL</b>：a-blogcms.jp を入れると、画像・タイトル・説明のカードになる</div><img src="assets/v33-features/embed-02-card.png" alt="a-blog cms の公式サイトがリンクカードとして表示された埋め込みブロック"></div></div><div class="nb-shot"><div class="nb-cap"><b>③ 動画の URL</b>：YouTube の URL を入れると、動画のプレーヤーが表示される。「URLを編集」で入れ直せる</div><img src="assets/v33-features/embed-03-youtube.png" alt="埋め込みブロックに a-blog cms の YouTube 動画が表示された画面"></div></div>
+  <div class="sc-grid sc-2" style="grid-template-columns: 1fr 1fr;"><div class="nb-side"><div class="nb-shot"><div class="nb-cap"><b>① URL を入れる</b>：「埋め込む」を押す</div><img src="assets/v33-features/embed-01-input.png?v=2" alt="埋め込みブロックの URL 入力欄に https://a-blogcms.jp を入れた画面"></div><div class="nb-shot"><div class="nb-cap"><b>② サイトの URL</b>：画像・タイトル・説明のカード</div><img src="assets/v33-features/embed-02-card.png" alt="a-blog cms の公式サイトがリンクカードとして表示された埋め込みブロック"></div></div><div class="nb-shot"><div class="nb-cap"><b>③ 動画の URL</b>：動画のプレーヤー</div><img src="assets/v33-features/embed-03-youtube.png" alt="埋め込みブロックに a-blog cms の YouTube 動画が表示された画面"></div></div>
   <div class="note">画面：v3.2 系のローカル環境（バージョン定数 3.2.39）。例として a-blog cms の公式サイトと公式動画を埋め込んでいます。</div>
-  <aside class="notes" data-time="0:35"><p>実際の画面です。埋め込みブロックを挿入すると、URL の入力欄が出ます。</p><p>a-blog cms の公式サイトの URL を入れて「埋め込む」を押すと、画像とタイトル、説明のカードになります。</p><p>YouTube の URL なら、編集画面の中で動画のプレーヤーが表示されます。<b>公開側と同じ見た目を、編集しながら確かめられます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -650,29 +701,16 @@
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 6 ｜ 埋め込みブロック（3/3）</div>
   <h2>埋め込んでよいサービスは、既存の許可リスト（YAML）で決める</h2>
-  <div class="pk-steps">
-    <div class="panel cool">
-      <h3>表示の決まり方</h3>
-      <table class="pk-table">
-        <tr><td>許可リストにある</td><td>サービスの埋め込み（iframe など）をサニタイズして表示</td></tr>
-        <tr><td>許可リストにない</td><td>画像・タイトル・提供元・説明の<b>カード</b>で表示</td></tr>
-        <tr><td>取得に失敗</td><td>カード表示、または編集画面でリンクに変換</td></tr>
-      </table>
-      <div class="note">埋め込み専用の設定は作らず、本文の HTML を通すときの許可リストと同じものを使います。管理画面のプレビューも隔離して表示し、サーバー側でもう一度サニタイズします。</div>
-    </div>
-    <div class="panel warm">
-      <h3>許可するサービスを足すとき</h3>
-      <div class="codebox"><span class="cm"># iframe を許可するホストを追加</span>
-extends_html_purifier_iframe_allowed_hosts:
-  - example.com/embed
-<span class="cm"># script を使う埋め込みを許可</span>
-extends_html_purifier_script_allowed_hosts:
-  - example.com</div>
-      <div class="note">書式は <code>host[/パスの前方][|allow[|sandbox]]</code>。主な動画・地図サービスは最初から許可されています。</div>
-      <div class="callout"><b>既存サイトでの準備</b>：ブロックエディター設定を保存済みのサイトは、<b>ブロックメニューに「埋め込み」を追加</b>してください。</div>
-    </div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">許可リストにある</span><span class="vz-arr">→</span><span class="vz-res">サービスの埋め込み（動画・地図など）</span></div>
+    <div class="vz-ba-row" style="background:var(--blue-soft)"><span class="vz-ba-label">許可リストにない</span><span class="vz-arr">→</span><span class="vz-res">タイトル・画像のカード</span></div>
+    <div class="vz-ba-row" style="background:#f3f4f6"><span class="vz-ba-label">取得に失敗</span><span class="vz-arr">→</span><span class="vz-res">カード、またはリンクに変換</span></div>
   </div>
-  <aside class="notes" data-time="0:40"><p>埋め込んでよいサービスは、本文の HTML と同じ許可リストで決まります。埋め込み専用の設定はありません。主な動画や地図のサービスは、最初から許可されています。</p><p>許可リストにないサービスの URL は、タイトルと画像のカードとして表示されます。</p><p>許可するサービスを足したいときは、設定ファイルの許可リストにホストを追加します。表示する内容は、サーバー側でもう一度サニタイズします。</p><p><b>こちらも既存のサイトでは、ブロックメニューに「埋め込み」を追加してください。</b></p></aside>
+  <div class="vz-rows vz-mt">
+    <div><span class="k">サービスを足すとき</span><span class="v">設定ファイルの許可リストにホストを追加<br><code>extends_html_purifier_iframe_allowed_hosts</code></span></div>
+    <div><span class="k">決まりごと</span><span class="v">埋め込み専用の設定はない・主な動画と地図は最初から許可・サーバー側でもう一度サニタイズ</span></div>
+  </div>
+  <div class="vz-warn"><b>既存のサイト</b>：ブロックメニューに「埋め込み」を追加</div>
   <div class="pageno"></div>
 </section>
 
@@ -680,40 +718,25 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 7 ｜ HTML ブロック（1/2）</div>
   <h2>ブロックエディターの中に、自由な HTML を書ける</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">ブロックエディターには、任意の HTML や JavaScript を書く手段がなかった。用意されたブロックにない表現は、エディターの外で対応するしかなかった</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d"><b>HTML ブロック</b>を追加。モーダルでコードを書きながら、隣でプレビューを確認できる。プレビューは管理画面から切り離した枠の中で動く</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">外部サービスが発行するウィジェットのコードを貼る。用意されたブロックでは作れない表や装飾を、その記事だけに入れる</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-res">✕ エディターの中に自由な HTML を書けない</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.36 から</span><span class="vz-chip">コードを書く</span><span class="vz-arr">→</span><span class="vz-res">✓ 隣のプレビューですぐ確認</span></div>
   </div>
-  <div class="points" style="flex:0">
-    <div class="panel warm nb-panel">
-      <h3>出力のされ方</h3>
-      <ul class="checks">
-        <li>出力時に、危険なタグ（既定は script・form）を取り除くかは <code>private/config.system.yaml</code> の <code>strip_dangerous_tag</code> で決まる（管理画面にはない）</li>
-        <li>同梱の設定は <code>on</code> で取り除く。この行がないサイトは <code>off</code> 扱いで、書いた HTML がそのまま出る</li>
-        <li>ブロックを使える人を権限で絞る仕組みはない</li>
-      </ul>
-    </div>
-    <div class="panel cool nb-panel">
-      <h3>既存サイトでの準備（v3.2.36 以降）</h3>
-      <ul class="checks">
-        <li>ブロックエディター設定を保存済みのサイトは、ブロックメニューに「HTML」を追加する</li>
-        <li>プレビューにテーマの CSS を当てたいときは、管理画面のエディター用 CSS の指定を使う</li>
-      </ul>
-    </div>
-  </div>
-  <aside class="notes" data-time="1:10"><p>ブロックエディターの最後は HTML ブロックです。</p><p>これまでは、ブロックエディターの中に自由な HTML を書く手段がありませんでした。</p><p>HTML ブロックでは、コードを書きながら、隣でプレビューを確認できます。外部サービスのウィジェットを貼るときなどに使えます。</p><p><b>注意点として、script や form が公開側に出るかどうかは、サーバーの設定ファイルで決まります。</b>private フォルダの config.system.yaml にある strip_dangerous_tag です。管理画面にはありません。同梱の設定は on で、出力するときに取り除きます。この行がないサイトでは off の扱いになり、書いた HTML がそのまま出ます。使える人を権限で絞る仕組みはないので、担当のサイトの設定を一度確かめてください。</p></aside>
+  <div class="vz-h3">script・form が公開側に出るか（<code>private/config.system.yaml</code> の <code>strip_dangerous_tag</code>）</div>
+  <table class="vz-cmp">
+    <tr><th style="width:320px">設定</th><th>公開側の出力</th></tr>
+    <tr><td><span class="tag ok" style="font-size:14px">on</span>　同梱の設定</td><td>出力するときに取り除く</td></tr>
+    <tr><td><span class="tag bug" style="font-size:14px">off</span>　この行がないサイト</td><td><b style="color:var(--red)">書いた HTML がそのまま出る</b></td></tr>
+  </table>
+  <div class="vz-warn"><ul class="vz-list warn"><li>管理画面にはこの設定がない。使える人を権限で絞る仕組みもない</li><li>既存のサイトは、ブロックメニューに「HTML」を追加</li></ul></div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 7 ｜ HTML ブロック（2/2）</div>
   <h2>左に HTML を書くと、右のプレビューにすぐ反映される</h2>
-  <div class="sc-grid"><div class="nb-shot" style="max-width: 1060px;"><div class="nb-cap"><b>「HTMLを編集」のモーダル</b>：左がコード、右がプレビュー。「拡大」でプレビューを大きく表示できる</div><img src="assets/v33-features/html-block-01-modal.png" alt="HTML を編集するモーダル。左にコード、右にプレビューが表示されている"></div></div>
+  <div class="sc-grid"><div class="nb-shot" style="max-width: 1060px;"><div class="nb-cap"><b>「HTMLを編集」</b>：左がコード、右がプレビュー</div><img src="assets/v33-features/html-block-01-modal.png" alt="HTML を編集するモーダル。左にコード、右にプレビューが表示されている"></div></div>
   <div class="note">画面：v3.2 系のローカル環境（バージョン定数 3.2.39）。データはサンプルです。画面の注記のとおり、外部サービスの埋め込みやスクリプトはプレビューでは正しく動かないことがあります。</div>
-  <aside class="notes" data-time="0:25"><p>HTML ブロックの編集画面です。左にコードを書くと、右のプレビューにすぐ反映されます。</p><p><b>画面にも注記があるとおり、YouTube などの埋め込みやスクリプトは、プレビューでは正しく動かないことがあります。</b>閲覧ページで確認してください。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -721,30 +744,23 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 8 ｜ CSV インポートでのメディア取り込み（1/2）</div>
   <h2>CSV の移行で、画像やファイルもメディアに取り込める</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">別の CMS からの移行で、記事は CSV で入れられても、画像やファイルは手で登録し直す必要があった。移行で一番時間がかかる部分だった</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">CSV インポートで、メディア用のカスタムフィールドと<b>ブロックエディター本文の画像・ファイル</b>を、自動でメディアに登録する（<b>プロフェッショナル以上</b>）</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">古いサイトのリニューアルで、記事と画像をまとめて移す。移行のリハーサルをドライランで繰り返す</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-chip">記事：CSV</span><span class="vz-chip">画像・ファイル：手で登録し直す</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.2.36 から</span><span class="vz-chip">CSV に書く</span><span class="vz-arr">→</span><span class="vz-res">✓ メディアに自動で登録</span><span class="tag cfg" style="margin-left:auto">プロフェッショナル以上</span></div>
   </div>
-  <table class="pk-table">
-    <tr><th>項目</th><th>仕様</th></tr>
-    <tr><td>CSV の列</td><td><code>フィールド名@media</code>（数値は既存のメディア ID）、<code>フィールド名@block-editor</code>（本文の画像・ファイル）</td></tr>
-    <tr><td>取り込み元</td><td>サーバー上の専用ディレクトリ（<code>archives/csv-import/source/</code>）に置いたファイル。URL を書いた場合もパスだけを使い、ネット経由では取りに行かない</td></tr>
-    <tr><td>失敗したとき</td><td>その項目だけを空にして警告を出す。失敗した行は CSV でダウンロードして直し、取り込み直せる</td></tr>
-    <tr><td>そのほか</td><td>ドライランができる。同じファイルを二重に登録しない。1 ファイル 50MB まで</td></tr>
-  </table>
-  <aside class="notes" data-time="0:55"><p>次は、CSV インポートでのメディアの取り込みです。<b>プロフェッショナル版以上の機能です。</b></p><p>別の CMS からの移行では、記事は CSV で入れられても、画像やファイルは手で登録し直す必要があり、ここに一番時間がかかっていました。</p><p><b>v3.2.36 から、CSV に書いた画像やファイルを、自動でメディアに登録できます。</b>ブロックエディターの本文に入っている画像も対象です。CSV の列名の後ろに「@media」や「@block-editor」を付けて指定します。</p><p>ファイルはサーバーの決まったフォルダに置きます。URL を書いてもネット経由では取りに行きません。ドライランで試せて、失敗した行だけを直して取り込み直せます。</p></aside>
+  <div class="vz-rows">
+    <div><span class="k">CSV の列名に付ける</span><span class="v"><code>@media</code>（メディアのフィールド）・<code>@block-editor</code>（本文の画像・ファイル）</span></div>
+    <div><span class="k">ファイルの置き場所</span><span class="v"><code>archives/csv-import/source/</code>　<small>URL を書いても、ネット経由では取りに行かない</small></span></div>
+    <div><span class="k">安心して移せる</span><span class="v"><ul class="vz-list ck" style="flex-direction:row;gap:24px"><li>ドライラン</li><li>失敗した行だけ取り込み直し</li><li>二重に登録しない</li></ul></span></div>
+  </div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 8 ｜ CSV インポートでのメディア取り込み（2/2）</div>
   <h2>書き方とドライランは、CSV インポートの画面で確かめられる</h2>
-  <div class="sc-grid"><div class="nb-shot" style="max-width: 1060px;"><div class="nb-cap"><b>CSV インポート</b>：画面の説明に @media・@block-editor の指定と、取り込み元の置き場所（archives/csv-import/source/）が載っている。下の「ドライラン」で保存せずに結果を確かめられる</div><img src="assets/v33-features/csv-import.png" alt="CSV インポートの画面。説明文とインポート先・CSV ファイル・ドライランの欄"></div></div>
+  <div class="sc-grid"><div class="nb-shot" style="max-width: 1060px;"><div class="nb-cap"><b>CSV インポート</b>：書き方と置き場所は画面の説明に。「ドライラン」で保存せずに確認</div><img src="assets/v33-features/csv-import.png" alt="CSV インポートの画面。説明文とインポート先・CSV ファイル・ドライランの欄"></div></div>
   <div class="note">画面：v3.2 系のローカル環境（バージョン定数 3.2.39）。データはサンプルです。</div>
-  <aside class="notes" data-time="0:25"><p>CSV インポートの画面です。説明に、画像やファイルを指定する列の書き方と、取り込み元のファイルを置く場所が載っています。</p><p><b>「ドライラン」にチェックを入れると、保存せずに結果だけを確かめられます。</b>移行のリハーサルに使ってください。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -752,16 +768,21 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">2. v3.2 で先に入れた改善 ｜ 機能 9 ｜ 公式 Agent Skills の配布</div>
   <h2>AI が a-blog cms の作法でテーマやプラグインを書けるように</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">AI エージェントでテーマやプラグインを作ろうとしても、a-blog cms のテンプレートの書き方やモジュールの作法を知らないため、そのままでは使えないコードになりやすい</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">公開したこと</div><div class="pk-d">GitHub の <b>appleple/acms-agent-skills</b> で公開（MIT）。Agent Skills の形式で <b>15 のスキル</b>を、サイト制作用・プラグイン開発用・共通の 3 つのプラグインに分けた。Claude Code・Codex・GitHub Copilot・Cursor などで使える</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">「この静的サイトを a-blog cms のテーマにして」「お問い合わせフォームを作って」「このサイトを 3.1 から 3.2 に上げたい」のように、いつもどおり依頼するだけで、合うスキルをエージェントが選んで読み込む</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-res">✕ AI が a-blog cms の書き方を知らず、使えないコードになりがち</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">10/30 公開</span><span class="vz-chip"><b>appleple/acms-agent-skills</b>（MIT）</span><span class="vz-res">✓ 15 のスキル</span></div>
   </div>
-  <div class="callout nb-note"><b>Claude Code での入れ方</b>：<code>claude plugin marketplace add appleple/acms-agent-skills</code> のあと、<code>claude plugin install acms-site-builder@acms-agent-skills</code>（プラグイン開発なら <code>acms-plugin-developer</code>）。ほかのエージェントは <code>npx skills add appleple/acms-agent-skills</code> などで入れられます。</div>
-  <div class="note">出典：GitHub の README・CHANGELOG（v0.1.1、2026.11.04）。対象は a-blog cms Ver. 3.2 以上で、仕様は Ver. 3.2.38 の本体ソースで確かめています。</div>
-  <aside class="notes" data-time="1:00"><p>2 章の最後は、公式 Agent Skills の配布です。<b>10 月 30 日に GitHub で公開しました。</b></p><p>AI エージェントにテーマやプラグインを書かせると、a-blog cms の書き方を知らないため、そのままでは使えないコードになりがちでした。</p><p>公開したスキルは 15 あり、サイト制作用、プラグイン開発用、共通の 3 つのプラグインに分けています。Claude Code のほか、Codex や GitHub Copilot、Cursor でも使えます。</p><p><b>入れたあとは、「お問い合わせフォームを作って」のように、いつもどおり依頼するだけです。</b>合うスキルをエージェントが選んで読み込みます。対象は a-blog cms の 3.2 以上です。</p></aside>
+  <table class="vz-cmp">
+    <tr><th>プラグイン</th><th style="width:90px">スキル</th><th>中身</th></tr>
+    <tr><td>サイト制作用</td><td>9</td><td>テーマ・テンプレート・フォーム・カスタムフィールドなど</td></tr>
+    <tr><td>プラグイン開発用</td><td>3</td><td>PHP の拡張・管理画面の JS プラグインなど</td></tr>
+    <tr><td>共通</td><td>3</td><td>依頼の振り分け・バージョンの判定・バージョンアップ</td></tr>
+  </table>
+  <div class="vz-rows vz-mt">
+    <div><span class="k">使い方</span><span class="v">いつもどおり頼むだけ（例：「お問い合わせフォームを作って」）</span></div>
+    <div><span class="k">使えるエージェント</span><span class="v">Claude Code・Codex・GitHub Copilot・Cursor など</span></div>
+  </div>
+  <div class="note">入れ方（Claude Code）：<code>claude plugin marketplace add appleple/acms-agent-skills</code> → <code>claude plugin install acms-site-builder@acms-agent-skills</code>。対象は a-blog cms Ver. 3.2 以上。</div>
   <div class="pageno"></div>
 </section>
 
@@ -774,11 +795,10 @@ extends_html_purifier_script_allowed_hosts:
     <div class="title-meta">
       <div><b>前提</b>PHP 8.3〜8.5・Ping 廃止</div>
       <div><b>本丸</b>カスタムフィールド定義・REST API</div>
-      <div><b>ログイン</b>メール認証・パスキー</div>
+      <div><b>ログイン</b>パスキー・メール認証</div>
       <div><b>運用</b>リダイレクト・一覧</div>
     </div>
   </div>
-  <aside class="notes" data-time="0:30"><p>ここから 3 章、v3.3 の新機能です。</p><p>v3.3 のテーマは、「コンテンツの構造を CMS が持ち、人と AI の両方から扱えるようにする」ことです。</p><p>変わる前提、本丸のカスタムフィールド定義と REST API、ログインの守り、運用の改善、の順に紹介します。</p><p><b>繰り返しになりますが、開発中の内容なので、正式リリースまでに変わることがあります。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -786,132 +806,56 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">3. v3.3 の新機能 ｜ 機能 10 ｜ 変わる前提</div>
   <h2>v3.3 は PHP 8.3〜8.5 で動き、Ping 送信はなくなる</h2>
-  <div class="points" style="flex:0;align-items:start">
-    <div class="panel cool">
-      <h3>対応する PHP は 8.3〜8.5 に</h3>
-      <ul class="checks">
-        <li>v3.2 系は PHP 8.1〜8.5。v3.3 は <b>PHP 8.3〜8.5</b>（8.3 以上 8.6 未満）で動く</li>
-        <li>v3.3 では PHP 8.1・8.2 のサポートを終える方針（CMS-7750）。パスキーに使うライブラリの修正版も、PHP 8.2 以上を必要とする</li>
-        <li>v3.3 へ上げる前に、サーバーの PHP のバージョンを確認する</li>
-      </ul>
-    </div>
-    <div class="panel warm">
-      <h3>Ping 送信機能の廃止（CMS-7725）</h3>
-      <ul class="checks">
-        <li><b>問題</b>：更新 Ping はほとんど使われておらず、v3.2.0 から非推奨。使わない機能を外部への送信口として残す理由がない</li>
-        <li><b>削除したもの</b>：ダッシュボードの「Ping送信（非推奨）」ボタン、コンフィグの「Pingショット」欄、送信処理、送信用テンプレート</li>
-        <li>保存済みの設定値はそのまま残るが、どこからも使われない</li>
-        <li>独自テーマ・拡張で Ping 送信を呼んでいるサイトは、v3.3 の前に外す</li>
-      </ul>
-    </div>
+  <div class="vz-h3">① 動く PHP が 8.3〜8.5 に</div>
+  <table class="vz-cmp">
+    <tr><td style="width:120px">v3.2</td><td><div class="vz-ver" style="margin:0;max-width:640px"><span>8.1</span><span>8.2</span><span>8.3</span><span>8.4</span><span>8.5</span></div></td></tr>
+    <tr><td>v3.3</td><td><div class="vz-ver" style="margin:0;max-width:640px"><span class="off">8.1</span><span class="off">8.2</span><span>8.3</span><span>8.4</span><span>8.5</span></div></td></tr>
+  </table>
+  <div class="vz-h3" style="margin-top:26px">② Ping 送信の廃止<small style="font-size:15px;font-weight:400;color:var(--muted);margin-left:12px">v3.2.0 から非推奨・ほとんど使われていない</small></div>
+  <div class="vz-rows">
+    <div><span class="k">なくなるもの</span><span class="v">ダッシュボードの「Ping送信」ボタン・コンフィグの「Pingショット」欄・送信の処理とテンプレート</span></div>
   </div>
-  <aside class="notes" data-time="0:50"><p>最初に、v3.3 で変わる前提を 2 つお伝えします。</p><p><b>1 つ目は、v3.3 で動く PHP が 8.3 から 8.5 になることです。</b>PHP 8.1 と 8.2 のサポートは終える方針です。後で紹介するパスキーに使うライブラリも、PHP 8.2 以上を必要とします。今のうちに、サーバーの PHP のバージョンを確認しておいてください。</p><p>2 つ目は、Ping 送信の廃止です。ほとんど使われておらず、v3.2.0 から非推奨にしていました。独自のテーマや拡張で Ping 送信を使っている場合は、v3.3 に上げる前に外してください。</p></aside>
+  <div class="vz-warn"><ul class="vz-list warn"><li>上げる前に、サーバーの PHP を確認</li><li>独自テーマ・拡張で Ping 送信を使っていたら外す</li></ul></div>
   <div class="pageno"></div>
 </section>
 
 <!-- U6 CF definition 1/2 -->
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 11 ｜ カスタムフィールドの定義（1/2）</div>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 11 ｜ カスタムフィールドの定義</div>
   <h2>カスタムフィールドを、HTML を書かずに管理画面で追加できる</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">カスタムフィールドを足すには、テーマに HTML を書く必要があった。運用者が自分で項目を増やせず、AI や API からも「どんな項目があるか」を読めなかった</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">管理画面に<b>「フィールド定義」</b>を追加。フィールドセットを作り、型を選んで並べるだけで、編集画面に入力欄が出る。値の保存先とテンプレートでの出し方は従来どおり</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">運用担当者が「開催日」「会場」などの項目を、制作会社に頼まずに追加する。公開後のサイトに、テーマを触らずに項目を足す</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-chip">テーマに HTML を書く</span><span class="vz-res">✕ 運用者は足せない・AI から項目が読めない</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.3</span><span class="vz-chip">「フィールド定義」で型を選ぶ</span><span class="vz-arr">→</span><span class="vz-res">✓ 編集画面に入力欄が出る</span></div>
   </div>
-  <table class="pk-table">
-    <tr><th>項目</th><th>仕様</th></tr>
-    <tr><td>使える場所</td><td>エントリー・カテゴリー・ブログ・ユーザー・モジュール</td></tr>
-    <tr><td>型</td><td>テキスト・数値・日時などの入力、メディア画像・ファイル、エントリー／カテゴリー／ユーザーの参照、地図、ブロックエディターなど 32 種。タブ・アコーディオン・横並び・繰り返しでレイアウトを組む</td></tr>
-    <tr><td>出し分け</td><td>他のフィールドの値で表示を切り替える。カテゴリーやロールでフィールドセットを出し分ける。ロールごとに読み取り専用・非表示にする</td></tr>
-    <tr><td>必須</td><td>「任意」「保存時に必須」「公開時に必須」から選ぶ。サーバー側でも確かめる</td></tr>
-    <tr><td>権限</td><td>ロールに「フィールド定義の編集」を追加</td></tr>
-  </table>
-  <aside class="notes" data-time="1:00"><p>ここからが v3.3 の本丸です。<b>1 つ目は、カスタムフィールドを管理画面で定義する機能です。</b></p><p>これまでカスタムフィールドを足すには、テーマに HTML を書く必要がありました。運用する方が自分で項目を増やすことはできず、AI や API から、どんな項目があるかを読み取ることもできませんでした。</p><p>v3.3 では、管理画面の「フィールド定義」で型を選んで並べるだけで、編集画面に入力欄が出ます。型は、数値や日時、メディア、ほかのエントリーの参照、地図など 32 種類です。</p><p>ほかの項目の値で表示を切り替えたり、ロールごとに読み取り専用にしたりもできます。</p><p>運用担当の方が「開催日」や「会場」の項目を、制作会社に頼まずに自分で足せるようになります。</p></aside>
-  <div class="pageno"></div>
-</section>
-
-<!-- U7 CF definition 2/2 -->
-<section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 11 ｜ カスタムフィールドの定義（2/2）</div>
-  <h2>いまのフィールドはそのまま使え、独自の型はテーマで足せる</h2>
-  <div class="pk-steps">
-    <div class="panel cool">
-      <h3>これまでのカスタムフィールドとの関係</h3>
-      <ul class="checks">
-        <li>テーマの <code>field.html</code> などに書いたフィールドは、そのまま動く</li>
-        <li>同じキーがテーマの <code>field.html</code> にもあれば、テーマの入力欄を優先する</li>
-        <li>値は従来のカスタムフィールドと同じ場所に保存。テンプレートでは今までどおり <code>{キー}</code> で出す</li>
-        <li>編集画面のレイアウトを上書きしているテーマは、定義を表示するモジュールの記述（3 行）を足す。<code>field.html</code> だけの上書きなら不要</li>
-      </ul>
-    </div>
-    <div class="panel warm">
-      <h3>テーマで独自の型を足す</h3>
-      <div class="codebox"><span class="cm"># themes/&lt;テーマ&gt;/admin/field-types/calendar/field-type.json</span>
-{
-  "label": "カレンダー",
-  "icon": "calendar_month",
-  "template": "input.html"
-}</div>
-      <div class="note">入力欄は ACMS テンプレートか Twig で書きます。</div>
-      <div class="callout"><b>定義もテーマで配れる</b>：<code>admin/field-definitions/&lt;対象&gt;.json</code> に、エクスポートと同じ形式で書く（同じキーなら管理画面の定義が優先）。定義のエクスポート／インポート、キーの変更、子ブログへの継承にも対応</div>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">型（32 種類）</span><span class="v">テキスト・数値・日時・メディア・エントリーの参照・地図・ブロックエディター など</span></div>
+    <div><span class="k">使える場所</span><span class="v">エントリー・カテゴリー・ブログ・ユーザー・モジュール</span></div>
+    <div><span class="k">いまのフィールド</span><span class="v">テーマに書いたカスタムフィールドは、そのまま動く</span></div>
   </div>
+  <div class="vz-rule">詳しくは、宇井さんの発表で紹介します</div>
   <div class="note">CMS-7722 はアルファ版に取り込み済みです。正式リリースまでに仕様が変わることがあります。</div>
-  <aside class="notes" data-time="0:45"><p><b>今テーマに書いているカスタムフィールドは、そのまま動きます。</b>値の保存先も、テンプレートでの書き方も変わりません。同じキーがテーマにもあるときは、テーマの入力欄が優先されます。</p><p>独自の入力欄が必要なときは、テーマに JSON とテンプレートを置けば、新しい型として足せます。フィールドの定義そのものも、テーマの JSON で配れます。エクスポートとインポートもできます。</p><p>編集画面のレイアウトを上書きしているテーマだけは、定義を表示するための記述を 3 行足す必要があります。</p></aside>
   <div class="pageno"></div>
 </section>
 
 <!-- U8 REST API 1/2 -->
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 12 ｜ REST API（1/2）</div>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 12 ｜ REST API</div>
   <h2>外部のシステムや AI から、サイトのデータを読み書きできる</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">これまでの API 機能は、モジュールの表示結果を JSON で返す<b>読み取り専用</b>の仕組み。外部のシステムや AI から記事を作る・直すといった操作はできなかった</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">リソースごとの <b>REST API</b>（<code>/rest-api/acms/v1/…</code>）を追加。ユーザーごとのトークンで認証し、OpenAPI 3.1 の仕様書も出力する</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">社内システムの新着情報を自動でエントリーにする。AI エージェントに記事の下書きを作らせる。サイトの内容を別のアプリに表示する</div></div>
+  <div class="vz-flow" style="justify-content:center;gap:18px;margin-bottom:22px">
+    <div class="vz-node">社内システム<small>新着情報を自動でエントリーに</small></div>
+    <div class="vz-node">AI エージェント<small>記事の下書きを作る</small></div>
+    <span class="vz-arr" style="font-size:28px">⇄</span>
+    <div class="vz-node hl">REST API<small>/rest-api/acms/v1/…</small></div>
+    <span class="vz-arr" style="font-size:28px">⇄</span>
+    <div class="vz-node">a-blog cms</div>
   </div>
-  <table class="pk-table">
-    <tr><th>リソース</th><th>できること</th></tr>
-    <tr><td>エントリー・メディア</td><td>一覧・取得・作成・更新・削除（GET / POST / PUT / PATCH / DELETE）。エントリーの公開・非公開の切り替えや複製、共有プレビューの URL も</td></tr>
-    <tr><td>そのほか</td><td>カテゴリー・ブログ・ユーザー・モジュール・ルール・コンフィグセット・設定なども読み書きできる（タグは作成を除く）。キャッシュのクリア、バックアップなど時間のかかる処理の実行</td></tr>
-    <tr><td>既存の API 機能</td><td>URL を分けたので、これまでの <code>/api/…</code> はそのまま使える</td></tr>
-  </table>
-  <aside class="notes" data-time="0:55"><p><b>本丸の 2 つ目は REST API です。</b></p><p>これまでの API 機能は、モジュールの表示結果を JSON で返す、読み取り専用の仕組みでした。外部のシステムや AI から、記事を作ったり直したりすることはできませんでした。</p><p>v3.3 の REST API では、エントリーやメディアの一覧、取得、作成、更新、削除ができます。カテゴリーやユーザー、ルールなども読み書きできます。仕様書は OpenAPI の形式で出力します。URL を分けているので、これまでの API 機能もそのまま使えます。</p><p>たとえば、社内システムの新着情報を自動でエントリーにしたり、AI に記事の下書きを作らせたりできます。</p></aside>
-  <div class="pageno"></div>
-</section>
-
-<!-- U9 REST API 2/2 -->
-<section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 12 ｜ REST API（2/2）</div>
-  <h2>トークンと権限で守り、AI からは MCP でもつなげる</h2>
-  <div class="pk-steps">
-    <div class="panel cool">
-      <h3>認証と守り</h3>
-      <ul class="checks">
-        <li>既定は無効。サイトの設定で有効にする</li>
-        <li>トークンはユーザー本人が管理画面で発行。使える範囲（スコープ）と有効期限（既定 90 日）を選ぶ。値は発行時に 1 回だけ表示</li>
-        <li>操作できる範囲は、そのユーザーの権限とスコープの両方で決まる</li>
-        <li>HTTPS 必須。回数制限（既定はトークンごとに 1 分 300 回）、書き込みは監査ログに残す</li>
-        <li>管理者は、全ユーザーのトークンを一覧して失効できる</li>
-      </ul>
-    </div>
-    <div class="panel warm">
-      <h3>AI から使うための仕組み</h3>
-      <ul class="checks">
-        <li><b>ドライラン</b>：保存せずに結果だけ確かめられる</li>
-        <li><b>エントリーの削除はゴミ箱へ</b>：完全に消すには明示の指定が要る（メディアは削除すると消える）</li>
-        <li><b>上書きの防止</b>：他の人の更新と衝突したら止める（If-Match）</li>
-        <li><b>二重実行の防止</b>：同じ依頼をもう一度送っても 1 回分だけ処理（Idempotency-Key）</li>
-      </ul>
-      <div class="callout"><b>AI エージェントから直接つなぐ</b>：MCP サーバー（<code>/mcp/</code>）と OAuth 2.1 を内蔵。どちらも既定は無効で、REST API とは別に有効にする</div>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">できること</span><span class="v">エントリー・メディア・カテゴリー・ユーザーなどの読み書き</span></div>
+    <div><span class="k">守り</span><span class="v"><b>既定は無効</b>。ユーザーごとのトークンで認証し、権限の範囲で操作</span></div>
+    <div><span class="k">AI から直接</span><span class="v">MCP サーバーを内蔵（こちらも既定は無効）</span></div>
   </div>
+  <div class="vz-rule">詳しくは、宇井さんの発表で紹介します</div>
   <div class="note">CMS-7717 はアルファ版に取り込み済みです。正式リリースまでに仕様が変わることがあります。</div>
-  <aside class="notes" data-time="0:55"><p><b>REST API は、標準では無効です。</b>使うときは、ユーザー本人がトークンを発行し、使える範囲と有効期限を選びます。操作できる範囲は、そのユーザーの権限とトークンの範囲の両方で決まります。</p><p>書き込みは監査ログに残り、管理者は全ユーザーのトークンを失効できます。</p><p>AI から使うことを考えて、保存せずに結果だけを確かめるドライラン、エントリーを削除してもゴミ箱に入る仕組み、他の人の更新との衝突や二重実行を防ぐ仕組みを入れています。</p><p><b>さらに、AI エージェントから直接つなぐための MCP サーバーも内蔵しています。</b>こちらも標準では無効で、REST API とは別に有効にします。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -919,162 +863,93 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">3. v3.3 の新機能 ｜ 機能 13・14 ｜ 一括編集とカテゴリーのインポート（計画）</div>
   <h2>大量のデータを、まとめて直す・まとめて作る手段を用意する</h2>
-  <div class="cases c2" style="flex:0;align-items:start">
-    <div class="case">
-      <div class="head"><div class="name">Custom Field Editor（表形式の一括編集）</div><span class="tag bug">計画</span></div>
-      <div class="who">CMS-7718 ／ カスタムフィールドの定義（機能 11）が前提</div>
-      <div class="row"><span class="k c">課題</span><span>複数のエントリーのカスタムフィールドを一覧で直せず、大量の更新は 1 件ずつ開く必要がある</span></div>
-      <div class="row"><span class="k s">予定</span><span>エントリー一覧を「行＝エントリー、列＝カスタムフィールド」の表にして、セルをその場で編集。変えたところだけ保存する</span></div>
-      <div class="row"><span class="k f">場面</span><span>商品の価格や在庫の表示を、まとめて直す</span></div>
-    </div>
-    <div class="case">
-      <div class="head"><div class="name">カテゴリーの CSV インポート</div><span class="tag bug">計画</span></div>
-      <div class="who">CMS-7723</div>
-      <div class="row"><span class="k c">課題</span><span>カテゴリーをたくさん作る作業は、管理画面で 1 件ずつ登録するしかない</span></div>
-      <div class="row"><span class="k s">予定</span><span>名前・コード・親カテゴリー・ステータス・カスタムフィールドを CSV から一括登録。親カテゴリーの確認、取り込み前の確認画面、失敗行の記録を用意する</span></div>
-      <div class="row"><span class="k f">場面</span><span>移行やサイトの立ち上げで、階層のあるカテゴリーをまとめて作る</span></div>
-    </div>
+  <div class="vz-rows">
+    <div style="grid-template-columns:360px 1fr"><span class="k">Custom Field Editor <span class="tag bug">計画</span></span><span class="v">カスタムフィールドを、表の形でまとめて直す</span></div>
+    <div style="grid-template-columns:360px 1fr"><span class="k">カテゴリーの CSV インポート <span class="tag bug">計画</span></span><span class="v">階層のあるカテゴリーを、CSV からまとめて作る</span></div>
   </div>
-  <div class="note">未着手のため、Jira の計画をもとにしています。</div>
-  <aside class="notes" data-time="0:45"><p>ここで、<b>まだ計画段階</b>の 2 つを紹介します。</p><p>1 つ目は Custom Field Editor です。エントリーの一覧を「行がエントリー、列がカスタムフィールド」の表にして、セルをその場で編集し、変えたところだけを保存します。商品の価格をまとめて直す、といった使い方を考えています。</p><p>2 つ目は、カテゴリーの CSV インポートです。階層のあるカテゴリーを、CSV からまとめて登録できるようにします。取り込み前の確認画面も用意します。</p><p>どちらも、大量のデータをまとめて直す、まとめて作るための機能です。</p></aside>
+  <div class="vz-rule">詳しくは、宇井さんの発表で紹介します</div>
+  <div class="note">未着手のため、Jira の計画（CMS-7718・CMS-7723）をもとにしています。</div>
   <div class="pageno"></div>
 </section>
 
 <!-- 15 F6 email 2FA (1/2) -->
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 15 ｜ メールの二段階認証（1/3）</div>
-  <h2>認証アプリがなくても、メールの確認コードで二段階認証できる</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">二段階認証は認証アプリ（TOTP）だけ。アプリを入れられない・使い慣れていない人がいると導入しにくい。スマートフォンをなくすとログインできない</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">パスワードの後に、<b>登録メールアドレスへ確認コード</b>を送る方式を追加。手段をいくつも有効にして「メイン」を選び、使えないときは別の手段に切り替えられる</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">会員サイトで、会員にアプリを入れてもらわずに二段階認証を使う。スタッフが端末をなくしたときに、メールで代わりにログインする</div></div>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 15 ｜ パスキー（1/3）</div>
+  <h2>指紋・顔・PIN のパスキーで、パスワードなしでログイン</h2>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">パスワード</span><span class="vz-res">✕ 漏えい・使い回し・偽サイトへの入力・毎回の手間</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.3</span><span class="vz-chip">「パスキーでログイン」</span><span class="vz-arr">→</span><span class="vz-chip">指紋・顔・PIN</span><span class="vz-arr">→</span><span class="vz-res">✓ ログイン（二段階認証は不要）</span></div>
   </div>
-  <div class="points" style="flex:0">
-    <div class="panel warm nb-panel">
-      <h3>ユーザーが設定すること</h3>
-      <ul class="checks">
-        <li>二段階認証の設定画面で、手段（認証アプリ・メール・パスキー）ごとに「有効」と「メイン」を選ぶ</li>
-        <li>管理画面のユーザー設定と、会員のマイページの両方にある</li>
-      </ul>
-    </div>
-    <div class="panel cool nb-panel">
-      <h3>ログイン時の動き</h3>
-      <ul class="checks">
-        <li>メインの手段で認証。使えなければ次の手段へ自動で切り替える</li>
-        <li>「別の方法で認証する」で手段を変えられる。コードの再送もできる</li>
-      </ul>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">使い方は 2 通り</span><span class="v"><b>1 段目</b>：パスワードの代わり　／　<b>2 段目</b>：二段階認証の手段</span></div>
+    <div><span class="k">別々に有効にできる</span><span class="v">管理ログイン・会員サインイン</span></div>
+    <div><span class="k">条件</span><span class="v">https のサイトだけ（開発用の localhost は例外）・PHP 8.3〜8.5</span></div>
   </div>
-  <aside class="notes" data-time="0:50"><p>ここからはログインの守りです。まず、メールでの二段階認証です。</p><p>これまでの二段階認証は、認証アプリだけでした。アプリを入れられない方がいると導入しにくく、スマートフォンをなくすとログインできません。</p><p><b>v3.3 では、パスワードの後に、登録しているメールアドレスへ確認コードを送る方式を追加しました。</b>認証アプリ、メール、パスキーの中から「メイン」を選びます。ログインのときは、メインの手段が使えなければ次の手段に自動で切り替わり、「別の方法で認証する」で選び直すこともできます。</p><p>会員サイトでも、会員にアプリを入れてもらわずに二段階認証を使えます。</p></aside>
   <div class="pageno"></div>
 </section>
 
 <!-- 16 F6 email 2FA (2/2) -->
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 15 ｜ メールの二段階認証（2/3）</div>
-  <h2>確認コードは短い時間で失効し、総当たりはロックで防ぐ</h2>
-  <div class="pk-steps">
-    <div class="panel cool">
-      <h3>確認コードの決まり（既定値）</h3>
-      <table class="pk-table">
-        <tr><td>コード</td><td>6 文字（0〜9 と A〜F）。新しく送ると古いコードは使えない</td></tr>
-        <tr><td>有効期限</td><td>10 分</td></tr>
-        <tr><td>再送の間隔</td><td>60 秒</td></tr>
-        <tr><td>再送の回数</td><td>5 回でロック</td></tr>
-        <tr><td>入力の回数</td><td>5 回失敗でロック</td></tr>
-      </table>
-      <div class="note">ロックの期間は、ログイン設定の試行回数制限と同じ値を使います。</div>
-    </div>
-    <div class="panel warm">
-      <h3>サイト側の設定</h3>
-      <ul class="checks">
-        <li>使えるかどうかは、これまでの「二段階認証」の設定に従う（メール専用の ON/OFF はない）</li>
-        <li>上の 4 つの値は <code>config.system.yaml</code> で変更する（管理画面には出さない）</li>
-        <li>メールの文面は <code>themes/system/mail/tfa-email/</code> のテンプレートで変えられる</li>
-        <li>メールアドレスが空のユーザーは、メール認証を設定できない</li>
-      </ul>
-    </div>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 15 ｜ パスキー（2/3）</div>
+  <h2>パスキーは複数登録でき、なくしたら管理者がリセットできる</h2>
+  <div class="vz-steps">
+    <div><div class="t">サイトで有効にする</div><div class="d">管理ログイン（<code>/login</code>）と会員サインイン（<code>/signin</code>）で別々に。例：会員だけ有効</div></div>
+    <div><div class="t">ユーザーが登録する</div><div class="d">端末ごとに複数。名前は「Mac の Chrome」のように自動。登録・削除の前に本人確認</div></div>
+    <div><div class="t">なくしたら</div><div class="d">管理者が「パスキーをリセット」で全部消す<br><small style="color:var(--muted)">自分自身には使えない</small></div></div>
   </div>
-  <aside class="notes" data-time="0:40"><p>確認コードは 6 文字で、10 分で使えなくなります。新しいコードを送ると、古いコードは使えません。再送は 60 秒おきで、再送が 5 回、または入力の失敗が 5 回になると、ロックがかかります。</p><p>これらの値は設定ファイルで変えられます。メール認証だけを個別に切る設定はなく、これまでの二段階認証の設定に従います。</p><p>メールの文面はテンプレートで変えられます。<b>なお、メールアドレスを登録していないユーザーは、この方法を使えません。</b></p></aside>
+  <div class="vz-rule" style="margin-top:28px">2 段目としても使える　二段階認証の設定で、認証アプリ・メールと並ぶ手段の 1 つ</div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 15 ｜ メールの二段階認証（3/3）</div>
-  <h2>認証手段ごとに「有効」と「メイン」を選ぶ</h2>
-  <div class="sc-grid"><div class="nb-shot" style="max-width: 820px;"><div class="nb-cap"><b>2 段階認証の設定</b>：認証アプリとメールが並び、それぞれ「有効」と「メイン」を選ぶ。ここではメールを有効・メインにした状態（保存前）</div><img src="assets/v33-features/tfa-email-settings.png" alt="2 段階認証の設定画面。認証アプリとメールの行があり、メールが有効・メインになっている"></div></div>
-  <div class="note">画面：v3.3 アルファ版のローカル環境。正式リリースまでに変わることがあります。認証アプリの QR コードとシークレットキーはぼかしています。</div>
-  <aside class="notes" data-time="0:25"><p>ユーザーの 2 段階認証の設定画面です。認証アプリとメールが並んでいて、それぞれ「有効」と「メイン」を選びます。</p><p><b>メールは、チェックを入れるだけで使えます。</b>認証アプリのように、QR コードを読み取る作業はいりません。</p></aside>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 15 ｜ パスキー（3/3）</div>
+  <h2>ログイン画面にボタンが増え、パスキーはユーザーごとの画面で登録する</h2>
+  <div class="sc-grid sc-2" style="grid-template-columns: 330px 1fr;"><div class="nb-shot"><div class="nb-cap"><b>① ログイン画面</b>：「パスキーでログイン」のボタン</div><img src="assets/v33-features/passkey-01-login.png" alt="管理ログイン画面。パスワード入力の下にパスキーでログインのボタンがある"></div><div class="nb-side"><div class="nb-shot"><div class="nb-cap"><b>② ログイン設定</b>：管理ログインとサインインで別々に有効にする</div><img src="assets/v33-features/passkey-02-config.png" alt="ログイン設定のパスキー欄。管理ログインとサインインのチェックボックス"></div><div class="nb-shot"><div class="nb-cap"><b>③ パスキーの登録</b>：「このデバイスにパスキーを登録」から登録する</div><img src="assets/v33-features/passkey-03-manage.png" alt="ユーザーのパスキー画面。登録済みのパスキーはなく、登録ボタンがある"></div></div></div>
+  <div class="note">画面：v3.3 アルファ版のローカル環境。正式リリースまでに変わることがあります。</div>
   <div class="pageno"></div>
 </section>
 
 <!-- 17 F7 passkey (1/2) -->
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 16 ｜ パスキー（1/3）</div>
-  <h2>指紋・顔・PIN のパスキーで、パスワードなしでログイン</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">パスワードは漏えい・使い回し・偽サイトへの入力の危険がある。毎回の入力も手間</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">WebAuthn の<b>パスキー</b>でのログインに対応。パスワードの代わり（1 段目）にも、二段階認証の手段（2 段目）にも使える。<b>管理ログインと会員サインインで別々に</b>有効にできる</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">管理画面だけパスキーを有効にして、スタッフのログインを安全に。会員サイトで、パスワードを忘れがちな会員のログインを楽にする</div></div>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 16 ｜ メールの二段階認証（1/3）</div>
+  <h2>認証アプリがなくても、メールの確認コードで二段階認証できる</h2>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-chip">認証アプリだけ</span><span class="vz-res">✕ アプリを入れられない人・端末をなくした人が困る</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.3</span><span class="vz-chip">パスワード</span><span class="vz-arr">→</span><span class="vz-chip"><b>メールの確認コード</b></span><span class="vz-arr">→</span><span class="vz-res">✓ ログイン</span></div>
   </div>
-  <div class="points" style="flex:0">
-    <div class="panel warm nb-panel">
-      <h3>ログイン画面</h3>
-      <ul class="checks">
-        <li>「パスキーでログイン」ボタンが増える（対応ブラウザのときだけ表示）</li>
-        <li>パスキーでログインしたときは、二段階認証を求めない（端末での本人確認を必須にしているため）</li>
-      </ul>
-    </div>
-    <div class="panel cool nb-panel">
-      <h3>動作の条件</h3>
-      <ul class="checks">
-        <li>https のサイトでだけ使える（開発用の localhost は例外）</li>
-        <li>PHP 8.3〜8.5（v3.3 の動作条件）</li>
-      </ul>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">手段を選ぶ</span><span class="v">認証アプリ・メール・パスキーごとに「有効」と「メイン」を選ぶ<br><small>管理画面のユーザー設定・会員のマイページの両方</small></span></div>
+    <div><span class="k">ログインのとき</span><span class="v">メインが使えなければ、次の手段へ自動で切り替え。「別の方法で認証する」で選び直せる</span></div>
+    <div><span class="k">例</span><span class="v">会員サイトで、会員にアプリを入れてもらわずに二段階認証</span></div>
   </div>
-  <aside class="notes" data-time="0:45"><p>次はパスキーです。</p><p>パスワードには、漏れたり、使い回されたり、偽のサイトに入力してしまったりする危険があります。毎回入力する手間もあります。</p><p><b>v3.3 では、指紋や顔、PIN を使うパスキーでログインできるようになりました。</b>パスワードの代わりにも、二段階認証の手段としても使えます。</p><p>ログイン画面には「パスキーでログイン」のボタンが増えます。パスキーでログインしたときは、端末で本人確認をしているので、二段階認証は求めません。<b>https のサイトでのみ使えます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
 <!-- 18 F7 passkey (2/2) -->
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 16 ｜ パスキー（2/3）</div>
-  <h2>パスキーは複数登録でき、なくしたら管理者がリセットできる</h2>
-  <div class="points" style="flex:0;align-items:start">
-    <div class="panel cool">
-      <h3>サイトの設定（ログイン設定 &gt; パスキー）</h3>
-      <table class="pk-table">
-        <tr><td>管理ログイン</td><td>/login でパスキーを使うか</td></tr>
-        <tr><td>会員サインイン</td><td>/signin でパスキーを使うか</td></tr>
-      </table>
-      <div class="note">2 つは別々に設定できます。例：会員だけ有効にして、管理者は従来のログインのまま。</div>
-      <div class="callout"><b>2 段目として使う</b>：二段階認証の設定画面で、認証アプリ・メールと並ぶ手段の 1 つとして ON/OFF できます。</div>
-    </div>
-    <div class="panel warm">
-      <h3>パスキーの登録と管理</h3>
-      <ul class="checks">
-        <li>会員はマイページ、管理ユーザーは管理画面の「パスキー」ページで登録</li>
-        <li>端末ごとに複数登録できる。名前は「Mac の Chrome」のように自動で付き、後から変えられる</li>
-        <li>登録と削除の前に、本人確認をもう一度求める</li>
-        <li>管理者は、ユーザー編集画面の「パスキーをリセット」で、そのユーザーのパスキーをすべて消せる（自分自身には使えない）</li>
-      </ul>
-    </div>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 16 ｜ メールの二段階認証（2/3）</div>
+  <h2>確認コードは短い時間で失効し、総当たりはロックで防ぐ</h2>
+  <div class="vz-stats">
+    <div class="vz-stat"><b>6 文字</b><span>コードの長さ</span></div>
+    <div class="vz-stat"><b>10 分</b><span>有効期限</span></div>
+    <div class="vz-stat"><b>60 秒</b><span>再送の間隔</span></div>
+    <div class="vz-stat"><b>5 回</b><span>再送でロック</span></div>
+    <div class="vz-stat"><b>5 回</b><span>入力の失敗でロック</span></div>
   </div>
-  <aside class="notes" data-time="0:40"><p><b>パスキーは、管理画面のログインと、会員のログインで、別々に有効にできます。</b>たとえば、会員だけパスキーを使えるようにして、管理者は従来のログインのまま、という設定ができます。</p><p>パスキーは端末ごとに複数登録でき、「Mac の Chrome」のような名前が自動で付きます。登録や削除の前には、本人確認をもう一度求めます。</p><p><b>端末をなくしたときは、管理者がそのユーザーのパスキーをまとめてリセットできます。</b>ただし、自分自身のパスキーには使えません。</p></aside>
+  <div class="note">数値は既定値。<code>config.system.yaml</code> で変えられる（管理画面にはない）。ロックの期間はログインの試行回数制限と同じ。</div>
+  <div class="vz-rows vz-mt">
+    <div><span class="k">使えるかどうか</span><span class="v">これまでの「二段階認証」の設定に従う（メール専用の ON/OFF はない）</span></div>
+    <div><span class="k">メールの文面</span><span class="v"><code>mail/tfa-email/</code> のテンプレートで変える</span></div>
+    <div><span class="k warn">使えない人</span><span class="v">メールアドレスを登録していないユーザー</span></div>
+  </div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
-  <div class="kicker">3. v3.3 の新機能 ｜ 機能 16 ｜ パスキー（3/3）</div>
-  <h2>ログイン画面にボタンが増え、パスキーはユーザーごとの画面で登録する</h2>
-  <div class="sc-grid sc-2" style="grid-template-columns: 330px 1fr;"><div class="nb-shot"><div class="nb-cap"><b>① ログイン画面</b>：「パスキーでログイン」のボタン</div><img src="assets/v33-features/passkey-01-login.png" alt="管理ログイン画面。パスワード入力の下にパスキーでログインのボタンがある"></div><div class="nb-side"><div class="nb-shot"><div class="nb-cap"><b>② ログイン設定</b>：管理ログインとサインインで別々に有効にする</div><img src="assets/v33-features/passkey-02-config.png" alt="ログイン設定のパスキー欄。管理ログインとサインインのチェックボックス"></div><div class="nb-shot"><div class="nb-cap"><b>③ パスキーの登録</b>：「このデバイスにパスキーを登録」から登録する</div><img src="assets/v33-features/passkey-03-manage.png" alt="ユーザーのパスキー画面。登録済みのパスキーはなく、登録ボタンがある"></div></div></div>
-  <div class="note">画面：v3.3 アルファ版のローカル環境。正式リリースまでに変わることがあります。</div>
-  <aside class="notes" data-time="0:30"><p>パスキーの画面です。ログイン画面には「パスキーでログイン」のボタンが増えます。</p><p>サイトの設定では、管理ログインとサインインを別々に有効にします。<b>パスキーそのものは、ユーザーごとの画面で「このデバイスにパスキーを登録」から登録します。</b></p></aside>
+  <div class="kicker">3. v3.3 の新機能 ｜ 機能 16 ｜ メールの二段階認証（3/3）</div>
+  <h2>認証手段ごとに「有効」と「メイン」を選ぶ</h2>
+  <div class="sc-grid"><div class="nb-shot" style="max-width: 820px;"><div class="nb-cap"><b>2 段階認証の設定</b>：手段ごとに「有効」と「メイン」を選ぶ</div><img src="assets/v33-features/tfa-email-settings.png" alt="2 段階認証の設定画面。認証アプリとメールの行があり、メールが有効・メインになっている"></div></div>
+  <div class="note">画面：v3.3 アルファ版のローカル環境。正式リリースまでに変わることがあります。認証アプリの QR コードとシークレットキーはぼかしています。</div>
   <div class="pageno"></div>
 </section>
 
@@ -1082,21 +957,16 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">3. v3.3 の新機能 ｜ 機能 17 ｜ リダイレクト管理（1/3）</div>
   <h2>URL の転送を、.htaccess を触らずに管理画面で設定できる</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">これまでの問題</div><div class="pk-d">URL を変えたときの 301 転送は、.htaccess などのサーバー設定を手で書く必要があった。運用者だけでは対応できず、書き間違えるとサイトが表示されなくなることもある</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">実装したこと</div><div class="pk-d">管理画面に<b>「リダイレクト」</b>を追加。転送元・転送先・ステータスコード・<b>いつ転送するか</b>をルールとして登録し、ドラッグで優先順位を並べ替える</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">リニューアルで変わった旧 URL を新 URL へ。正規表現で <code>/news/(\d+).html</code> → <code>/topics/$1/</code> のようにまとめて転送。終了したキャンペーンページを 410 で終了扱いにする</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">これまで</span><span class="vz-chip">.htaccess を手で書く</span><span class="vz-res">✕ 運用者だけでは難しい・書き間違えると表示されない</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">v3.3</span><span class="vz-chip">管理画面の「リダイレクト」</span><span class="vz-arr">→</span><span class="vz-res">✓ ルールを登録して、ドラッグで順番を決める</span></div>
   </div>
-  <table class="pk-table">
-    <tr><th>項目</th><th>仕様</th></tr>
-    <tr><td>マッチ方式</td><td>完全一致・前方一致（パスの区切り単位）・正規表現。正規表現の値は転送先で <code>$1</code> として使える</td></tr>
-    <tr><td>転送先</td><td><code>/</code> で始まるサイト内のパス、または http(s) の外部 URL</td></tr>
-    <tr><td>ステータスコード</td><td>301（既定）・302・307・308・410・451。410 と 451 は転送せずに終了を返す</td></tr>
-    <tr><td>クエリ文字列</td><td>転送先へ引き継ぐ（既定）・無視する・条件に含める</td></tr>
-  </table>
-  <aside class="notes" data-time="0:55"><p>次は、管理画面でのリダイレクト管理です。</p><p>URL を変えたときの転送は、これまで .htaccess などのサーバーの設定を手で書く必要がありました。運用する方だけでは対応しにくく、書き間違えるとサイトが表示されなくなることもあります。</p><p><b>v3.3 では、管理画面の「リダイレクト」で、転送をルールとして登録できます。</b>一致のさせ方は、完全一致、前方一致、正規表現の 3 つです。正規表現を使えば、古い URL の形をまとめて新しい URL に転送できます。</p><p>ステータスコードは 301 が既定です。終了したキャンペーンのページを 410 で終了扱いにすることもできます。</p></aside>
+  <div class="vz-rows">
+    <div><span class="k">例：まとめて転送</span><span class="v"><code>/news/(\d+).html</code> <span class="vz-arr">→</span> <code>/topics/$1/</code>　<span class="tag ok" style="font-size:14px">301</span></span></div>
+    <div><span class="k">一致のさせ方</span><span class="v">完全一致・前方一致・正規表現</span></div>
+    <div><span class="k">ステータスコード</span><span class="v">301（既定）・302・307・308 ／ 410・451 は転送せず終了を返す</span></div>
+    <div><span class="k">転送先</span><span class="v">サイト内のパス、または外部の URL</span></div>
+  </div>
   <div class="pageno"></div>
 </section>
 
@@ -1104,37 +974,22 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">3. v3.3 の新機能 ｜ 機能 17 ｜ リダイレクト管理（2/3）</div>
   <h2>既定は「404 のときだけ」転送。表示できるページは邪魔しない</h2>
-  <div class="pk-steps">
-    <div class="panel cool">
-      <h3>いつ転送するか（ルールごとに選ぶ）</h3>
-      <table class="pk-table">
-        <tr><td>404 のときだけ（既定）</td><td>そのURLが本来「ページがありません」になるときだけ転送。移行の取りこぼし対策に安全</td></tr>
-        <tr><td>常に</td><td>ページがあっても、一致したら転送する</td></tr>
-      </table>
-      <div class="note">判定の順：「常に」のルール → 通常のページ → 「404 のときだけ」のルール → 既存のエントリーコードでの転送。非公開ブログや IP 制限で見られないページは転送しません。</div>
-    </div>
-    <div class="panel warm">
-      <h3>安心して使うための仕組み</h3>
-      <ul class="checks">
-        <li>保存時に、正規表現の書き間違い・同じルールの重複・転送のループを止める</li>
-        <li>ルールはブログごと。新しく作るルールは、下の階層のブログにも適用される（変更できる）</li>
-        <li>管理画面・API・メディアなどへのアクセスは転送しない</li>
-        <li>編集できるのは管理者権限のユーザー</li>
-      </ul>
-      <div class="callout"><b>今回は入れないもの</b>：CSV での一括登録、404 のログ、ヒット数の記録</div>
-    </div>
+  <div class="vz-h3">判定の順番</div>
+  <div class="vz-flow"><span class="vz-pill">「常に」のルール</span><span class="vz-arr">→</span><span class="vz-pill">通常のページ</span><span class="vz-arr">→</span><span class="vz-pill" style="background:var(--accent);color:#fff">「404 のときだけ」のルール（既定）</span><span class="vz-arr">→</span><span class="vz-pill">エントリーコードでの転送</span></div>
+  <div class="vz-rows" style="margin-top:22px">
+    <div><span class="k">保存のときに止める</span><span class="v">正規表現の書き間違い・同じルールの重複・転送のループ</span></div>
+    <div><span class="k">転送しないもの</span><span class="v">管理画面・API・メディア・非公開や IP 制限のページ</span></div>
+    <div><span class="k">今回は入れない</span><span class="v">CSV 一括登録・404 のログ・ヒット数</span></div>
   </div>
-  <div class="note">CMS-7728 はアルファ版に取り込み済みです。正式リリースまでに仕様が変わることがあります。</div>
-  <aside class="notes" data-time="0:35"><p><b>転送のタイミングは、標準では「ページが見つからないときだけ」です。</b>そのため、今表示できているページを邪魔することはありません。ページがあっても転送したいときは、「常に」を選びます。</p><p>保存するときには、正規表現の書き間違い、同じルールの重複、転送のループを止めます。管理画面や API、メディアへのアクセスは転送しません。</p><p>CSV での一括登録やアクセスの記録は、今回は入れていません。</p></aside>
+  <div class="note">ルールはブログごと（下の階層にも適用）。編集できるのは管理者。CMS-7728 はアルファ版に取り込み済みです。正式リリースまでに仕様が変わることがあります。</div>
   <div class="pageno"></div>
 </section>
 
 <section class="slide">
   <div class="kicker">3. v3.3 の新機能 ｜ 機能 17 ｜ リダイレクト管理（3/3）</div>
   <h2>ルールは一覧で優先順位を並べ、1 件ずつ詳細を設定する</h2>
-  <div class="sc-grid sc-2" style="grid-template-columns: 1fr 1fr;"><div class="nb-shot"><div class="nb-cap"><b>① 一覧</b>：転送元・転送先・コード・発火のタイミングが並ぶ。左のつまみをドラッグして優先順位を変える</div><img src="assets/v33-features/redirect-01-list.png" alt="リダイレクト管理の一覧。5 件のルールが並んでいる"></div><div class="nb-shot"><div class="nb-cap"><b>② 詳細</b>：一致のさせ方・ステータスコード・転送先・発火タイミング・クエリ文字列・グローバルを設定する</div><img src="assets/v33-features/redirect-02-edit.png" alt="リダイレクト詳細の画面。正規表現のルールを開いている"></div></div>
+  <div class="sc-grid sc-2" style="grid-template-columns: 1fr 1fr;"><div class="nb-shot"><div class="nb-cap"><b>① 一覧</b>：ドラッグで優先順位を変える</div><img src="assets/v33-features/redirect-01-list.png" alt="リダイレクト管理の一覧。5 件のルールが並んでいる"></div><div class="nb-shot"><div class="nb-cap"><b>② 詳細</b>：一致のさせ方・コード・転送先・タイミング</div><img src="assets/v33-features/redirect-02-edit.png" alt="リダイレクト詳細の画面。正規表現のルールを開いている"></div></div>
   <div class="note">画面：v3.3 アルファ版のローカル環境。正式リリースまでに変わることがあります。</div>
-  <aside class="notes" data-time="0:30"><p>リダイレクト管理の画面です。一覧に、転送元と転送先、ステータスコード、発火のタイミングが並びます。優先順位は、左のつまみをドラッグして変えます。</p><p><b>詳細の画面では、正規表現のルールや、410 の終了扱いなども設定できます。</b></p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -1142,32 +997,16 @@ extends_html_purifier_script_allowed_hosts:
 <section class="slide">
   <div class="kicker">3. v3.3 の新機能 ｜ 機能 18 ｜ ユーザー・カテゴリー一覧の React 化（計画）</div>
   <h2>ユーザー・カテゴリー一覧も、エントリー一覧と同じ操作感に</h2>
-  <div class="pk-flow">
-    <div class="pk-box pk-bad"><div class="pk-n">1</div><div class="pk-t">いまの問題</div><div class="pk-d">ユーザー一覧・カテゴリー一覧はサーバー側で HTML を作るだけの画面で、並べ替え・絞り込み・まとめての操作がしにくい</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">2</div><div class="pk-t">予定していること</div><div class="pk-d">エントリー一覧で使っている共通の一覧部品（React）で作り直し、<b>列での並べ替え・絞り込み・複数選択でのまとめ操作</b>を提供する</div></div>
-    <div class="pk-arr">→</div>
-    <div class="pk-box"><div class="pk-n">3</div><div class="pk-t">使える場面</div><div class="pk-d">会員の多いサイトで、条件に合うユーザーを選んでまとめて権限やステータスを変える。カテゴリーの多いサイトで目的のカテゴリーをすぐ見つける</div></div>
+  <div class="vz-ba">
+    <div class="vz-ba-row vz-bad"><span class="vz-ba-label">いま</span><span class="vz-res">✕ 並べ替え・絞り込み・まとめての操作がしにくい</span></div>
+    <div class="vz-ba-row vz-good"><span class="vz-ba-label">予定 <span class="tag bug">計画</span></span><span class="vz-chip">エントリー一覧の共通部品で作り直す</span></div>
   </div>
-  <div class="points" style="flex:0">
-    <div class="panel cool nb-panel">
-      <h3>守ること</h3>
-      <ul class="checks">
-        <li>いまの一覧でできる検索・絞り込みは、引き続き使える</li>
-        <li>権限のないユーザーには、まとめての操作を出さない</li>
-        <li>件数が多くてもページ送りで表示できる</li>
-      </ul>
-    </div>
-    <div class="panel warm nb-panel">
-      <h3>進め方</h3>
-      <ul class="checks">
-        <li>どちらか 1 画面から始め、知見をためてから他の一覧へ広げる</li>
-        <li>カテゴリーの階層をドラッグで並べ替える操作は、最初の版では無理に入れない</li>
-      </ul>
-    </div>
+  <div class="vz-rows">
+    <div><span class="k">できるようになる</span><span class="v">列で並べ替え・絞り込み・複数選択でまとめて操作<br><small>例：会員をまとめて選んで、権限やステータスを変える</small></span></div>
+    <div><span class="k">守ること</span><span class="v">いまの検索・絞り込みは使える・権限がなければまとめての操作は出さない・件数が多くてもページ送り</span></div>
+    <div><span class="k">進め方</span><span class="v">どちらか 1 画面から始め、知見をためてから広げる</span></div>
   </div>
   <div class="note">未着手のため、Jira の計画（CMS-7727）をもとにしています。</div>
-  <aside class="notes" data-time="0:35"><p>3 章の最後は、<b>計画段階</b>のユーザー一覧とカテゴリー一覧の改善です。</p><p>今の 2 つの一覧は、並べ替えや絞り込み、まとめての操作がしにくい画面です。エントリー一覧で使っている共通の部品で作り直し、同じ操作感にする予定です。今の検索や絞り込みは、引き続き使えるようにします。</p><p>どちらか 1 つの画面から始めて、知見をためてから広げます。会員の多いサイトや、カテゴリーの多いサイトで効いてくる改善です。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -1176,10 +1015,10 @@ extends_html_purifier_script_allowed_hosts:
   <div class="kicker">4. まとめ</div>
   <h2>いまからできる準備</h2>
   <div class="sum-grid">
-    <div class="sum"><div class="badge">1</div><div class="t">v3.2 で使える</div><div class="d">絞り込み・作成後の遷移・メールの Twig・CSV でのメディア取り込み</div></div>
+    <div class="sum"><div class="badge">1</div><div class="t">v3.2 で使える</div><div class="d">エントリー管理の絞り込み・作成後の遷移・メールの Twig・CSV でのメディア取り込み</div></div>
     <div class="sum"><div class="badge">2</div><div class="t">ブロックエディター</div><div class="d">グループ・埋め込み・HTML で、表現の幅が広がった</div></div>
     <div class="sum"><div class="badge">3</div><div class="t">v3.3 の本丸</div><div class="d">フィールド定義と REST API で、人と AI が同じ構造を扱う</div></div>
-    <div class="sum"><div class="badge">4</div><div class="t">ログインと URL</div><div class="d">メール認証・パスキー・リダイレクト管理</div></div>
+    <div class="sum"><div class="badge">4</div><div class="t">ログインと URL</div><div class="d">パスキー・メール認証・リダイレクト管理</div></div>
     <div class="sum"><div class="badge">5</div><div class="t">変わる前提</div><div class="d">v3.3 は PHP 8.3〜8.5。Ping 送信はなくなる</div></div>
   </div>
   <div class="todo"><h3>持ち帰りチェックリスト</h3><ul class="checks">
@@ -1190,7 +1029,6 @@ extends_html_purifier_script_allowed_hosts:
     <li>サーバーの PHP を 8.3〜8.5 にできるか確認する</li>
     <li>.htaccess に書いた転送を洗い出しておく</li>
   </ul></div>
-  <aside class="notes" data-time="0:50"><p>最後にまとめです。</p><p><b>まずは、担当しているサイトを v3.2.39 に更新して、ブロックメニューにグループ、埋め込み、HTML を追加してみてください。</b>Twig のテーマを使っている場合は、メールテンプレートに波かっこが入っていないかも確かめてください。</p><p>v3.3 に向けては、サーバーの PHP を 8.3 から 8.5 にできるか、独自の拡張で Ping 送信を使っていないか、.htaccess に書いている転送がどれだけあるか、を確認しておいていただけると安心です。</p><p>ご清聴ありがとうございました。ご質問があればどうぞ。</p></aside>
   <div class="pageno"></div>
 </section>
 
@@ -1204,6 +1042,54 @@ extends_html_purifier_script_allowed_hosts:
   <button id="memo" title="発表者メモを別ウィンドウで開く（N キー）">メモ</button>
 </div>
 
+<!-- notes:begin (generated by build-notes.py) -->
+<script id="notes-data" type="application/json">
+{
+"01": "---\ntime: 0:15\n---\n\na-blog cms の開発でエンジニアをしている永富です。\n\n今日は、v3.3 プロジェクトで決めた次のバージョンの機能と、v3.3 に向けて v3.2 で先に入れた改善についてお話しします。\n",
+"02": "---\ntime: 0:25\n---\n\n今日の内容は 4 つです。v3.3 のプロジェクトについて、次に v3.2 で先に入れた改善、そして v3.3 の新機能、最後にまとめです。\n\n**v3.2 の話はすでに使える内容、v3.3 の話は開発中の内容です。**この違いを意識して聞いていただけると分かりやすいと思います。\n",
+"03": "---\ntime: 0:25\n---\n\n**v3.3 の正式リリースは、2027 年の春ごろを考えています。時期はまだ決まっていません。**\n\n今日 11 月 13 日にアルファ版を出し、1 月から 2 月末までに機能を凍結します。\n\nv3.3 では、入れる機能を最初に決めて、その一つひとつをしっかり仕上げることに集中しています。\n",
+"04": "---\ntime: 0:45\n---\n\n機能をどのバージョンに入れるかは、バージョンごとの役割に照らして決めました。\n\nv3.2 の役割は「当たり前の品質の底上げ」です。早く出せる軽い改善を束ねて、先に出しています。\n\nv3.3 の役割は「戦略の本丸」です。**AI エージェントから操作できる CMS、つまり REST API と、コンテンツ管理の強化**を進めます。\n\n「判断のルール」として、v3.3 のコンセプトを前に進める機能は v3.3 へ、地味でも当たり前に必要な改善は v3.2 で先に出す、と決めました。\n\nv3.2 と v3.3 を合わせて 18 の機能を紹介します。\n",
+"05": "---\ntime: 1:00\n---\n\nまず v3.2 の機能です。\n\n1 つ目、ライブラリの更新と PHP 8.5 対応。2 つ目、メールテンプレートの Twig 対応。3 つ目、エントリー管理のタグ絞り込みとサブカテゴリー対応。4 つ目、作成後に、作成したデータの編集画面へ移動。5 つ目から 7 つ目は、ブロックエディターのグループブロック、埋め込みブロック、HTML ブロック。8 つ目、CSV インポートでのメディア取り込み。こちらはプロフェッショナル以上の機能です。9 つ目が、公式 Agent Skills の配布です。\n\n**9 個のうち、上から順に 8個は v3.2.25 から v3.2.36 ですでにリリースしています。**\n残りの1つである公式 Agent Skills も、10 月 30 日に GitHub で公開しました。",
+"06": "---\ntime: 0:35\n---\n\n続いて v3.3 の 9 個の機能です。\n\nPing 送信の廃止、パスキー、メールの二段階認証、リダイレクト管理は、すでにアルファ版に取り込んでいます。\n\n**本丸のカスタムフィールドの定義と REST API も、アルファ版に取り込んでいます。**9 個のうち 6 個がアルファ版に入っていて、残りの 3 つは計画の段階です。\n\n**v3.3 の内容は、正式リリースまでに変わることがあります。**その前提で聞いていただければと思います。\n",
+"07": "---\ntime: 0:25\n---\n\nまずは v3.2 で先に入れた改善です。\n\nv3.3 を待たずに、毎日の運用でつまずきやすい所から直しました。大きく分けて 土台、管理画面、入力、移行の 4 つの観点から修正いたしました。\n\n**リリース済みの機能は、v3.2 系の最新版、v3.2.39 ですぐに使えます。**\n",
+"08": "---\ntime: 0:55\n---\n\nまずは土台の更新です。\n\n2026年12月31日 の PHP 8.4 のアクティブサポートサポート終了に備える必要がありました。\n\nそこで、使っている各種ライブラリを新しい版に更新し、**v3.2.27 から PHP 8.5 でも動くようにしました。**v3.2 系で動く PHP は 8.1 から 8.5 で、更新するだけで使えます。\n\n**v3.3 からは、PHP8.2が 2026年12月31日にセキュリティサポートが終了予定のため動く PHP が 8.3 から 8.5 になります。**v3.2 系を使っている間は、これまでどおり 8.1 から使えます。v3.3 に上げる前に、サーバーの PHP を 8.3 以上にしておいていただけると CMS のバージョンアップがスムーズに行えます。",
+"09": "---\ntime: 1:05\n---\n\n次は、メールテンプレートの Twig 対応です。\n\n公開側や管理画面のテンプレートは Twig で書けるのに、メールだけは従来の a-blog cms 独自の書き方のままででした。\n\nv3.2.25 から、テーマで Twig を有効にしていれば、フォームの自動返信や会員登録のメールなども Twig で書けます。値の出し方は公開側と同じです。お問い合わせの種類ごとに自動返信の文面を変えたり、公開側と同じ部品を読み込んで署名を共通にしたりできます。\n\n**注意点として、Twig を有効にすると、.twig のファイルが先に探されますが、なくてこれまでの body.txt が使われた場合も、その中身は Twig として処理されます。**本文に、波かっこを 2 つ続けた文字や、波かっことパーセントの組み合わせを書いている場合は、送られるメールの文面が変わらないか確認してください。\n",
+"10": "---\ntime: 0:55\n---\n\nここからは管理画面の改善です。まずは、記事の一覧を表示するエントリー管理の画面です。\n\nタグで記事を分類しているサイトでは、これまでエントリー管理でタグの絞り込みができませんでした。サブカテゴリーに入れた記事も、カテゴリーの絞り込みには出ませんでした。\n\n**v3.2.27 から、エントリー管理の「高度な絞り込み」でタグを選べます。**複数選ぶと、すべてのタグを持つ記事に絞り込みます。タグを選ぶと、そのタグと一緒に使われているタグだけが候補に残るので、絞り込みやすくなっています。\n\nエントリー管理をカテゴリーで絞り込んだときは、サブカテゴリーに入れた記事も出ます。準備は不要で、更新すれば使えます。\n",
+"11": "---\ntime: 0:25\n---\n\n実際の画面です。エントリー管理の「高度な絞り込み」に、タグの欄が増えています。\n\n「ペット可」を選ぶと、候補が、ペット可と一緒に使われているタグだけになります。\n\n**検索すると、エントリー管理の一覧に、ペット可のタグを持つ記事だけが並びます。**\n",
+"12": "---\ntime: 1:25\n---\n\n次は、作成した後の画面の移動です。\n\nこれまでは、カテゴリーなどを作成した後も、入力内容が残ったまま新規作成の画面に留まっていました。そのまま直して保存すると、もう 1 件作られてしまっていました。\n\n**v3.2.29 からは、作成すると、そのデータの編集画面に移動します。**リロードしても二重に登録されず、「作成しました」のメッセージも 1 回だけ出ます。作成に失敗したときは、これまでどおり入力内容を残して作成画面を表示します。\n\n対象は、管理画面で新しく作成する画面のうち、カテゴリー、ユーザー、ユーザーグループ、ロール、フォーム、ルール、エイリアス、ショートカット、スケジュール、Webhook、コンフィグセットです。エントリーとモジュール ID は、以前から、作成すると作成したものの画面へ移動していました。カテゴリーの選択欄から開く「カテゴリー追加」のモーダルは、作成するとモーダルが閉じて選択欄に反映されるので、画面は移動しません。ブログだけは、別のドメインのブログに移るとログインが切れるため、今の画面に留まり、メッセージのリンクから移動します。\n",
+"13": "---\ntime: 0:40\n---\n\n実際の画面で、以前と比べます。どちらも、カテゴリーを作成した直後の画面です。\n\n左が v3.2.28 までの動きです。「作成しました」と出ますが、新規作成の画面のままで、ボタンも「作成」のままです。ここで直して押すと、もう 1 件できてしまいます。\n\n**右が v3.2.29 以降です。作成したカテゴリーの編集画面に移り、ボタンも「保存」と「削除」に変わります。**パンくずにも、作ったカテゴリーの名前が出ます。\n",
+"14": "---\ntime: 0:50\n---\n\nここからはブロックエディターです。まずグループブロックです。\n\nこれまでは、複数のブロックをまとめて、背景色や余白を付ける手段がありませんでした。\n\n**グループブロックを使うと、複数のブロックを 1 つにまとめて、HTML の要素、スタイル、背景色を選べます。**まとめるには、ブロックを選んで「グループ化」を押すほか、スラッシュコマンドの /group、挿入メニュー、ショートカットも使えます。section や aside を選んだときは、読み上げ用のラベルも入れられます。\n\nたとえば記事の途中に、背景色の付いたお知らせの枠を作れます。\n",
+"15": "---\ntime: 0:30\n---\n\n実際の画面です。段落を 3 つ選ぶと、ツールバーに「グループ化」のボタンが出ます。ショートカットの ⌘G でもまとめられます。\n\nグループを選ぶと、ツールバーで HTML の要素、スタイル、背景色を選べます。ここでは aside と黄色の背景を選びました。\n\n**選んだ見た目は、編集画面でもそのまま確かめられます。**\n",
+"16": "---\ntime: 0:45\n---\n\nここで、よく似たカラムブロックとの違いを整理します。\n\n**グループは複数のブロックを 1 つの枠で囲むもの、カラムはブロックを横に並べるものです。**\n\nHTML を見ると違いが分かります。グループは、外側の要素を aside や section から選べて、その中にブロックが直接入ります。\n\nカラムは、外側が常に div で、その中に列ごとの箱が入ります。列の数で CSS のグリッドが決まります。\n\nこの 2 つは入れ子にできるので、カラムの各列にグループを入れて、背景付きのカードを横に並べることもできます。\n",
+"17": "---\ntime: 0:45\n---\n\n選べる HTML の要素とスタイルは、管理者がブロックエディターの設定で決めます。\n\n要素は、既定では div、section、aside の 3 つで、article や header なども足せます。スタイルは、ラベルと class を登録します。「一発グループ化」を有効にすると、ワンクリックでグループ化できます。\n\nテーマで囲みや強調のスタイルを用意しておけば、運用する方は選ぶだけで使えます。\n\n**ブロックエディターの設定を保存している既存のサイトでは、ブロックメニューに「グループ」を追加してください。**\n",
+"18": "---\ntime: 0:35\n---\n\nこちらが設定の画面です。上の「グループブロック HTML要素」に、ツールバーで選べる要素を並べます。既定では div、section、aside の 3 つです。\n\n下の「グループブロック クラス」で、スタイルの class とラベルを登録します。**「一発グループ化」を有効にすると、ワンクリックでグループ化できます。**\n",
+"19": "---\ntime: 0:40\n---\n\n次は埋め込みブロックです。\n\n動画や SNS、地図を記事に入れるには、これまで埋め込み用の HTML を手で貼る必要がありました。\n\n**埋め込みブロックでは、URL を入れて確定するだけで、プレビューが表示されます。**配置や表示サイズ、キャプションは、ツールバーで調整します。\n\n取得に失敗したときは、再試行するか、URL を変えるか、通常のリンクに変えられます。イベントの報告に動画を入れたり、SNS の投稿を引用したりするときに便利です。\n",
+"20": "---\ntime: 0:35\n---\n\n実際の画面です。埋め込みブロックを挿入すると、URL の入力欄が出ます。\n\na-blog cms の公式サイトの URL を入れて「埋め込む」を押すと、画像とタイトル、説明のカードになります。\n\nYouTube の URL なら、編集画面の中で動画のプレーヤーが表示されます。**公開側と同じ見た目を、編集しながら確かめられます。**\n",
+"21": "---\ntime: 0:40\n---\n\n埋め込んでよいサービスは、本文の HTML と同じ許可リストで決まります。埋め込み専用の設定はありません。主な動画や地図のサービスは、最初から許可されています。\n\n許可リストにないサービスの URL は、タイトルと画像のカードとして表示されます。\n\n許可するサービスを足したいときは、設定ファイルの許可リストにホストを追加します。表示する内容は、サーバー側でもう一度サニタイズします。\n\n**こちらも既存のサイトでは、ブロックメニューに「埋め込み」を追加してください。**\n",
+"22": "---\ntime: 1:05\n---\n\nブロックエディターの最後は HTML ブロックです。\n\nこれまでは、ブロックエディターの中に自由な HTML を書く手段がありませんでした。\n\nHTML ブロックでは、コードを書きながら、隣でプレビューを確認できます。外部サービスのウィジェットを貼るときなどに使えます。\n\n**注意点として、script や form タグが公開側に出るかどうかは、サーバーの設定ファイルで決まります。**private フォルダの config.system.yaml にある strip_dangerous_tag です。管理画面にはありません。同梱の設定は on で、出力するときに取り除きます。この行がないサイトでは off の扱いになり、書いた HTML がそのまま出ます。使える人を権限で絞る仕組みはないので、担当のサイトの設定を一度確かめてください。\n",
+"23": "---\ntime: 0:25\n---\n\nHTML ブロックの編集画面です。左にコードを書くと、右のプレビューにすぐ反映されます。\n\n**画面にも注記があるとおり、YouTube などの埋め込みやスクリプトは、プレビューでは正しく動かないことがあります。**閲覧ページで確認してください。\n",
+"24": "---\ntime: 1:10\n---\n\n次は、CSV インポートでのメディアの取り込みです。**プロフェッショナル版以上の機能です。**\n\n別の CMS からの移行では、記事は CSV で入れられても、画像やファイルは手で登録し直す必要があり、ここに一番時間がかかっていました。\n\n**v3.2.36 から、CSV に書いた画像やファイルを、自動でメディアに登録できます。**ブロックエディターの本文に入っている画像も対象です。CSV の列名の後ろに「@media」や「@block-editor」を付けて指定します。\n\nファイルはサーバーの決まったフォルダに置きます。URL を書いてもネット経由では取りに行きません。ドライランで試せて、失敗した行だけを直して取り込み直せます。取り込めるファイルは、標準では 1 つ 50MB までです。上限は .env の CSV_IMPORT_MEDIA_MAX_FILESIZE で変えられます。\n",
+"25": "---\ntime: 0:25\n---\n\nCSV インポートの画面です。説明に、画像やファイルを指定する列の書き方と、取り込み元のファイルを置く場所が載っています。\n\n**「ドライラン」にチェックを入れると、保存せずに結果だけを確かめられます。**移行のリハーサルに使ってください。\n",
+"26": "---\ntime: 0:55\n---\n\n2 章の最後は、公式 Agent Skills の配布です。**10 月 30 日に GitHub で公開しました。**\n\nAI エージェントにテーマやプラグインを書かせると、a-blog cms の書き方を知らないため、そのままでは使えないコードになりがちでした。\n\n公開したスキルは 15 あり、サイト制作用、プラグイン開発用、共通の 3 つのプラグインに分けています。Claude Code のほか、Codex や GitHub Copilot、Cursor でも使えます。\n\n**入れたあとは、「お問い合わせフォームを作って」のように、いつもどおり依頼するだけです。**合うスキルをエージェントが選んで読み込みます。対象は a-blog cms の 3.2 以上です。\n",
+"27": "---\ntime: 0:30\n---\n\nここから 3 章、v3.3 の新機能です。\n\nv3.3 のテーマは、「コンテンツの構造を CMS が持ち、人と AI の両方から扱えるようにする」ことです。\n\n変わる前提、本丸のカスタムフィールド定義と REST API、ログインの守り、運用の改善、の順に紹介します。\n\n**繰り返しになりますが、開発中の内容なので、正式リリースまでに変わることがあります。**\n",
+"28": "---\ntime: 0:40\n---\n\n最初に、v3.3 で変わる前提を 2 つお伝えします。\n\n**1 つ目は、最初にご説明した通り　v3.3 で動く PHP が 8.3 から 8.5 になることです。**PHP 8.1 と 8.2 のサポートは終える方針です。今のうちに、サーバーの PHP のバージョンを確認しておいてください。\n\n2 つ目は、Ping 送信の廃止です。ほとんど使われておらず、v3.2.0 から非推奨にしていました。独自のテーマや拡張で Ping 送信を使っている場合は、v3.3 に上げる前に外してください。\n",
+"29": "---\ntime: 0:25\n---\n\nここからが v3.3 の本丸です。**1 つ目は、カスタムフィールドを管理画面で定義する機能です。**\n\n管理画面の「フィールド定義」で型を選んで並べるだけで、編集画面に入力欄が出ます。今テーマに書いているカスタムフィールドは、そのまま動きます。\n\n詳しくは、宇井さんの発表で紹介します。\n",
+"30": "---\ntime: 0:25\n---\n\n**本丸の 2 つ目は REST API です。**\n\n外部のシステムや AI から、エントリーやメディアなどを読み書きできます。標準では無効で、ユーザーごとのトークンで認証します。AI エージェントから直接つなぐ MCP サーバーも内蔵しています。\n\nこちらも詳しくは、宇井さんの発表で紹介します。\n",
+"31": "---\ntime: 0:20\n---\n\nここで、**まだ計画段階**の 2 つを紹介します。\n\nカスタムフィールドを表の形でまとめて直す Custom Field Editor と、カテゴリーを CSV からまとめて作るカテゴリーの CSV インポートです。\n\nこちらも詳しくは、宇井さんの発表で紹介します。\n",
+"32": "---\ntime: 0:45\n---\n\nここからはログインの守りです。まずパスキーです。\n\nパスワードには、漏れたり、使い回されたり、偽のサイトに入力してしまったりする危険があります。毎回入力する手間もあります。\n\n**v3.3 では、指紋や顔、PIN を使うパスキーでログインできるようになりました。**パスワードの代わりにも、二段階認証の手段としても使えます。\n\nログイン画面には「パスキーでログイン」のボタンが増えます。パスキーでログインしたときは、端末で本人確認をしているので、二段階認証は求めません。**https のサイトでのみ使えます。**\n",
+"33": "---\ntime: 0:40\n---\n\n**パスキーは、管理画面のログインと、会員のログインで、別々に有効にできます。**たとえば、会員だけパスキーを使えるようにして、管理者は従来のログインのまま、という設定ができます。\n\nパスキーは端末ごとに複数登録でき、「Mac の Chrome」のような名前が自動で付きます。登録や削除の前には、本人確認をもう一度求めます。\n\n**端末をなくしたときは、管理者がそのユーザーのパスキーをまとめてリセットできます。**ただし、自分自身のパスキーには使えません。\n",
+"34": "---\ntime: 0:25\n---\n\nパスキーの画面です。ログイン画面には「パスキーでログイン」のボタンが増えます。\n\nサイトの設定では、管理ログインとサインインを別々に有効にします。**パスキーそのものは、ユーザーごとの画面で「このデバイスにパスキーを登録」から登録します。**\n",
+"35": "---\ntime: 0:45\n---\n\n次は、メールでの二段階認証です。\n\nこれまでの二段階認証は、認証アプリだけでした。アプリを入れられない方がいると導入しにくく、スマートフォンをなくすとログインできません。\n\n**v3.3 では、パスワードの後に、登録しているメールアドレスへ確認コードを送る方式を追加しました。**認証アプリ、メール、パスキーの中から「メイン」を選びます。ログインのときは、メインの手段が使えなければ次の手段に自動で切り替わり、「別の方法で認証する」で選び直すこともできます。\n\n会員サイトでも、会員にアプリを入れてもらわずに二段階認証を使えます。\n",
+"36": "---\ntime: 0:40\n---\n\n確認コードは 6 文字で、10 分で使えなくなります。新しいコードを送ると、古いコードは使えません。再送は 60 秒おきで、再送が 5 回、または入力の失敗が 5 回になると、ロックがかかります。\n\nこれらの値は設定ファイルで変えられます。メール認証だけを個別に切る設定はなく、これまでの二段階認証の設定に従います。\n\nメールの文面はテンプレートで変えられます。**なお、メールアドレスを登録していないユーザーは、この方法を使えません。**\n",
+"37": "---\ntime: 0:25\n---\n\nユーザーの 2 段階認証の設定画面です。認証アプリとメールが並んでいて、それぞれ「有効」と「メイン」を選びます。\n\n**メールは、チェックを入れるだけで使えます。**認証アプリのように、QR コードを読み取る作業はいりません。\n",
+"38": "---\ntime: 1:00\n---\n\n次は、管理画面でのリダイレクト管理です。\n\nURL を変えたときの転送は、これまで .htaccess などのサーバーの設定を手で書く必要がありました。運用する方だけでは対応しにくく、書き間違えるとサイトが表示されなくなることもあります。\n\n**v3.3 では、管理画面の「リダイレクト」で、転送をルールとして登録できます。**一致のさせ方は、完全一致、前方一致、正規表現の 3 つです。正規表現を使えば、古い URL の形をまとめて新しい URL に転送できます。\n\nステータスコードは 301 が既定です。終了したキャンペーンのページを 410 で終了扱いにすることもできます。URL の後ろのクエリ文字列は、標準では転送先に引き継ぎます。無視したり、一致の条件に含めたりもできます。\n",
+"39": "---\ntime: 0:35\n---\n\n**転送のタイミングは、標準では「ページが見つからないときだけ」です。**そのため、今表示できているページを邪魔することはありません。ページがあっても転送したいときは、「常に」を選びます。\n\n保存するときには、正規表現の書き間違い、同じルールの重複、転送のループを止めます。管理画面や API、メディアへのアクセスは転送しません。\n\nCSV での一括登録やアクセスの記録は、今回は入れていません。\n",
+"40": "---\ntime: 0:25\n---\n\nリダイレクト管理の画面です。一覧に、転送元と転送先、ステータスコード、発火のタイミングが並びます。優先順位は、左のつまみをドラッグして変えます。\n\n**詳細の画面では、正規表現のルールや、410 の終了扱いなども設定できます。**\n",
+"41": "---\ntime: 0:35\n---\n\n3 章の最後は、**計画段階**のユーザー一覧とカテゴリー一覧の改善です。\n\n今の 2 つの一覧は、並べ替えや絞り込み、まとめての操作がしにくい画面です。エントリー一覧で使っている共通の部品で作り直し、同じ操作感にする予定です。今の検索や絞り込みは、引き続き使えるようにします。\n\nどちらか 1 つの画面から始めて、知見をためてから広げます。会員の多いサイトや、カテゴリーの多いサイトで効いてくる改善です。\n",
+"42": "---\ntime: 0:45\n---\n\n最後にまとめです。\n\n**まずは、担当しているサイトを v3.2.39 に更新して、ブロックメニューにグループ、埋め込み、HTML を追加してみてください。**Twig のテーマを使っている場合は、メールテンプレートに波かっこが入っていないかも確かめてください。\n\nv3.3 に向けては、サーバーの PHP を 8.3 から 8.5 にできるか、独自の拡張で Ping 送信を使っていないか、.htaccess に書いている転送がどれだけあるか、を確認しておいていただけると安心です。\n\nご清聴ありがとうございました。ご質問があればどうぞ。\n"
+}
+</script>
+<!-- notes:end -->
 <script>
   const slides = [...document.querySelectorAll('.slide')];
   const stage = document.getElementById('stage');
@@ -1248,21 +1134,77 @@ extends_html_purifier_script_allowed_hosts:
     return (h.tagName === 'IMG' ? h.alt : h.textContent).replace(/\s+/g, ' ').trim();
   }
   function fmt(sec) { return `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, '0')}`; }
+  // Speaker notes live in notes/NN.md (NN = slide number, 2 digits).
+  // Format: optional front matter "---\ntime: m:ss\n---", then Markdown
+  // (blank line = new paragraph, line break = <br>, **bold**, "- " list).
+  const notesData = [];
+  let notesSeq = 0;
+  function mdToHtml(md) {
+    const esc = (t) => t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const inline = (t) => esc(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+    return md.trim().split(/\n\s*\n/).map((block) => {
+      const lines = block.split('\n').map((l) => l.trim()).filter(Boolean);
+      if (lines.every((l) => /^[-*] /.test(l))) return `<ul>${lines.map((l) => `<li>${inline(l.slice(2))}</li>`).join('')}</ul>`;
+      return `<p>${lines.map(inline).join('<br>')}</p>`;
+    }).join('');
+  }
+  function parseNote(text) {
+    const m = text.replace(/\r\n/g, '\n').match(/^---\n([\s\S]*?)\n---\n?([\s\S]*)$/);
+    const meta = m ? m[1] : '';
+    const t = meta.match(/^time:\s*(\d+:\d{2})\s*$/m);
+    return { time: t ? t[1] : '', html: mdToHtml(m ? m[2] : text) };
+  }
+  // Copy embedded by build-notes.py; used when the md files can't be fetched (file://).
+  const embeddedNotes = (() => {
+    const el = document.getElementById('notes-data');
+    try { return el ? JSON.parse(el.textContent) : {}; } catch (e) { return {}; }
+  })();
+  function loadNotes() {
+    return Promise.all(slides.map((_, i) => {
+      const key = String(i + 1).padStart(2, '0');
+      // prefer the md file itself (edits show up at once over http); fall back to the embedded copy
+      const fetched = location.protocol === 'file:' ? Promise.resolve(null)
+        : fetch(`notes/${key}.md`, { cache: 'no-store' }).then((r) => (r.ok ? r.text() : null)).catch(() => null);
+      return fetched
+        .then((t) => {
+          const text = t !== null ? t : embeddedNotes[key];
+          notesData[i] = text == null ? null : parseNote(text);
+        });
+    }));
+  }
   function renderNotes() {
     if (!notesWin || notesWin.closed) return;
     const d = notesWin.document;
     const el = slides[cur];
-    const notes = el.querySelector('.notes');
     d.getElementById('page').textContent = `${cur + 1} / ${slides.length}`;
-    const toSec = (t) => { const [m, s] = t.split(':').map(Number); return m * 60 + s; };
-    const deadline = slides.slice(0, cur + 1).reduce((sum, s) => {
-      const n = s.querySelector('.notes');
-      return sum + (n && n.dataset.time ? toSec(n.dataset.time) : 0);
-    }, 0);
-    d.getElementById('target').textContent = notes && notes.dataset.time ? `目安 ${notes.dataset.time}（経過 ${fmt(deadline)} までに）` : '';
+    // re-read the md files every time so edits show up without reloading
+    const seq = ++notesSeq;
+    loadNotes().then(() => {
+      if (seq !== notesSeq || !notesWin || notesWin.closed) return;
+      const notes = notesData[cur];
+      const toSec = (t) => { const [m, s] = t.split(':').map(Number); return m * 60 + s; };
+      const deadline = notesData.slice(0, cur + 1).reduce((sum, n) => sum + (n && n.time ? toSec(n.time) : 0), 0);
+      d.getElementById('target').textContent = notes && notes.time ? `目安 ${notes.time}（経過 ${fmt(deadline)} までに）` : '';
+      d.getElementById('body').innerHTML = notes ? notes.html
+        : `<p>（メモなし：notes/${String(cur + 1).padStart(2, '0')}.md がありません）</p>`;
+    });
     d.getElementById('title').textContent = slideTitle(el);
-    d.getElementById('body').innerHTML = notes ? notes.innerHTML : '<p>（メモなし）</p>';
     d.getElementById('next').textContent = cur + 1 < slides.length ? `次：${slideTitle(slides[cur + 1])}` : '次：（最後のスライド）';
+    // live preview of the current slide (left half)
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('img').forEach((img) => { img.src = img.src; });
+    clone.classList.add('active');
+    const ps = d.getElementById('pstage');
+    ps.replaceChildren(d.importNode(clone, true));
+    fitPreview();
+  }
+  function fitPreview() {
+    if (!notesWin || notesWin.closed) return;
+    const d = notesWin.document;
+    const box = d.getElementById('preview');
+    const s = box.clientWidth / 1280;
+    d.getElementById('pstage').style.transform = `scale(${s})`;
+    box.style.height = `${720 * s}px`;
   }
   function tick() {
     if (!notesWin || notesWin.closed || startedAt === null) return;
@@ -1273,37 +1215,48 @@ extends_html_purifier_script_allowed_hosts:
   }
   function openNotes() {
     if (notesWin && !notesWin.closed) { notesWin.focus(); return; }
-    notesWin = window.open('', 'acms-notes', 'width=760,height=640');
+    notesWin = window.open('', 'acms-notes', 'width=1440,height=800');
     if (!notesWin) return;
     const d = notesWin.document;
     d.open();
-    d.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>発表者メモ</title><style>
+    d.write(`<!DOCTYPE html><html lang="ja"><head><meta charset="UTF-8"><title>発表者メモ</title><style>${document.querySelector('style').textContent}</style><style>
+      html, body { height: auto; background: #fff; }
+      body { overflow: auto; }
+      .wrap { display: flex; gap: 24px; align-items: flex-start; }
+      .wrap > aside { flex: 0 0 50%; position: sticky; top: 20px; }
+      .wrap > main { flex: 1; min-width: 0; }
+      #preview { position: relative; overflow: hidden; border: 1px solid #e5e7eb; }
+      #pstage { position: absolute; top: 0; left: 0; width: 1280px; height: 720px; transform-origin: 0 0; }
+      #pstage .slide { box-shadow: none; }
       body { margin: 0; padding: 20px 24px; font-family: "Hiragino Sans", "Noto Sans JP", sans-serif; color: #1f2937; background: #fff; }
-      header { display: flex; gap: 16px; align-items: baseline; border-bottom: 2px solid #1b2a41; padding-bottom: 8px; }
-      #page { font-size: 22px; font-weight: 800; color: #1b2a41; }
+      header { display: flex; gap: 16px; align-items: baseline; border-bottom: 2px solid #3a3a3a; padding-bottom: 8px; }
+      #page { font-size: 22px; font-weight: 800; color: #3a3a3a; }
       #target { font-size: 15px; color: #6b7280; }
-      #timer { margin-left: auto; font-size: 20px; font-weight: 700; color: #1b2a41; cursor: pointer; }
+      #timer { margin-left: auto; font-size: 20px; font-weight: 700; color: #3a3a3a; cursor: pointer; }
       #timer.over { color: #d64545; }
-      #title { font-size: 18px; font-weight: 800; color: #f2711c; margin: 14px 0 8px; }
+      #title { font-size: 18px; font-weight: 800; color: #2f6fad; margin: 14px 0 8px; }
       #body ul { margin: 0; padding-left: 22px; }
       #body li { font-size: 20px; line-height: 1.6; margin-bottom: 6px; }
       #body p { font-size: 19px; line-height: 1.75; margin: 0 0 10px; }
       #body b { color: #d64545; }
       #next { margin-top: 18px; padding-top: 10px; border-top: 1px solid #e5e7eb; font-size: 15px; color: #6b7280; }
       nav { margin-top: 16px; display: flex; gap: 8px; }
-      nav button { font-size: 15px; padding: 6px 16px; border: 0; border-radius: 6px; background: #eaf0f8; color: #1b2a41; cursor: pointer; }
+      nav button { font-size: 15px; padding: 6px 16px; border: 0; border-radius: 6px; background: #eaf0f8; color: #3a3a3a; cursor: pointer; }
       .help { font-size: 12px; color: #6b7280; margin-top: 10px; }
     </style></head><body>
       <header><span id="page"></span><span id="target"></span><span id="timer" title="クリックでタイマーを 0 に戻す">経過 0:00 / ${TALK_MINUTES}:00</span></header>
+      <div class="wrap"><aside><div id="preview"><div id="pstage"></div></div></aside><main>
       <div id="title"></div><div id="body"></div><div id="next"></div>
       <nav><button id="p">◀ 前へ</button><button id="n">次へ ▶</button></nav>
       <div class="help">このウィンドウでも矢印キーでスライドを送れます。タイマーは開いたときから数え、クリックで 0 に戻ります。</div>
+      </main></div>
     </body></html>`);
     d.close();
     d.addEventListener('keydown', handleKey);
     d.getElementById('p').onclick = () => show(cur - 1);
     d.getElementById('n').onclick = () => show(cur + 1);
     d.getElementById('timer').onclick = () => { startedAt = Date.now(); tick(); };
+    notesWin.addEventListener('resize', fitPreview);
     startedAt = Date.now();
     renderNotes();
     tick();
