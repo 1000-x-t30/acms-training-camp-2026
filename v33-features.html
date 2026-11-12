@@ -57,6 +57,10 @@
   .dark .lead { color: #c7d0de; }
   .pageno { position: absolute; right: 40px; bottom: 22px; font-size: 13px; color: var(--muted); }
   .dark .pageno { color: #8a98b0; }
+  /* trial-site URL shown at the top right from slide 2 on (added by the script below) */
+  .siteurl { position: absolute; top: 14px; right: 36px; z-index: 2; font-family: "SFMono-Regular", Menlo, Consolas, monospace;
+    font-size: 19px; font-weight: 700; color: var(--accent); text-decoration: none;
+    background: rgba(255,255,255,.9); padding: 5px 16px; border-radius: 999px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
   .badge {
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; border-radius: 50%;
@@ -353,7 +357,7 @@
 
   /* ---- theme: match the cover (light gray, charcoal, blue, halftone dots) ---- */
   .slide { overflow: hidden; }
-  .slide > *:not(.pageno):not(.notes) { position: relative; z-index: 1; }
+  .slide > *:not(.pageno):not(.notes):not(.siteurl) { position: relative; z-index: 1; }
   .slide::after, .slide.dark::before, .slide.cover::before {
     content: ""; position: absolute; z-index: 0; pointer-events: none; border-radius: 50%;
     background-image: radial-gradient(circle, var(--dot) 1.7px, transparent 2.2px); background-size: 8px 8px;
@@ -1114,6 +1118,14 @@
   let cur = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
 
   slides.forEach((el, n) => { const p = el.querySelector('.pageno'); if (p) p.textContent = n + 1; });
+  // Keep the v3.3 alpha trial-site URL visible on every slide after the announcement (slide 1).
+  const SITE_URL = 'https://www.ablogcms.io/v303-alpha/';
+  slides.slice(1).forEach((el) => {
+    const a = document.createElement('a');
+    a.className = 'siteurl'; a.href = SITE_URL; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = SITE_URL.replace(/^https:\/\//, '');
+    el.appendChild(a);
+  });
   function fit() {
     const full = !!document.fullscreenElement;
     const s = Math.min(window.innerWidth / 1280, (window.innerHeight - (full ? 0 : 50)) / 720);
