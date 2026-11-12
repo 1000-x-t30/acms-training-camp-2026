@@ -831,11 +831,16 @@
     <tr><td style="width:120px">v3.2</td><td><div class="vz-ver" style="margin:0;max-width:640px"><span>8.1</span><span>8.2</span><span>8.3</span><span>8.4</span><span>8.5</span></div></td></tr>
     <tr><td>v3.3</td><td><div class="vz-ver" style="margin:0;max-width:640px"><span class="off">8.1</span><span class="off">8.2</span><span>8.3</span><span>8.4</span><span>8.5</span></div></td></tr>
   </table>
-  <div class="vz-h3" style="margin-top:26px">② Ping 送信の廃止<small style="font-size:15px;font-weight:400;color:var(--muted);margin-left:12px">v3.2.0 から非推奨・ほとんど使われていない</small></div>
+  <div class="vz-h3" style="margin-top:16px">② Ping 送信の廃止<small style="font-size:15px;font-weight:400;color:var(--muted);margin-left:12px">v3.2.0 から非推奨・ほとんど使われていない</small></div>
   <div class="vz-rows">
     <div><span class="k">なくなるもの</span><span class="v">ダッシュボードの「Ping送信」ボタン・コンフィグの「Pingショット」欄・送信の処理とテンプレート</span></div>
   </div>
-  <div class="vz-warn"><ul class="vz-list warn"><li>上げる前に、サーバーの PHP を確認</li><li>独自テーマ・拡張で Ping 送信を使っていたら外す</li></ul></div>
+  <div class="vz-h3" style="margin-top:16px">③ 同梱の jQuery・htmx を 4 系に<small style="font-size:15px;font-weight:400;color:var(--muted);margin-left:12px">非互換の変更あり</small></div>
+  <div class="vz-rows">
+    <div><span class="k">jQuery</span><span class="v">3.7.1 → <b>4.0.0</b>。<code>.size()</code>・<code>$.isFunction</code>・<code>.bind()</code> など、削除・非推奨の書き方が動かなくなることがある</span></div>
+    <div><span class="k">htmx</span><span class="v">2 系 → <b>4.0.0</b>。イベント名が変わり、<code>hx-</code> 属性は親から自動で引き継がれなくなる</span></div>
+  </div>
+  <div class="vz-warn"><ul class="vz-list warn" style="flex-direction:row;flex-wrap:wrap;gap:4px 28px"><li>サーバーの PHP を確認</li><li>Ping 送信を使っていたら外す</li><li>テーマの JS や hx- 属性の動きを確認</li></ul></div>
   <div class="pageno"></div>
 </section>
 
@@ -1039,7 +1044,7 @@
     <div class="sum"><div class="badge">2</div><div class="t">ブロックエディター</div><div class="d">グループ・埋め込み・HTML で、できることが増えた</div></div>
     <div class="sum"><div class="badge">3</div><div class="t">v3.3 の目玉</div><div class="d">フィールド定義と REST API で、AI からもサイトを操作できる</div></div>
     <div class="sum"><div class="badge">4</div><div class="t">ログインと URL</div><div class="d">パスキー・メール認証・リダイレクト管理</div></div>
-    <div class="sum"><div class="badge">5</div><div class="t">変わる前提</div><div class="d">v3.3 は PHP 8.3〜8.5。Ping 送信はなくなる</div></div>
+    <div class="sum"><div class="badge">5</div><div class="t">変わる前提</div><div class="d">v3.3 は PHP 8.3〜8.5。Ping 送信はなくなる。jQuery 4・htmx 4 に</div></div>
   </div>
   <div class="todo"><h3>帰ったらやっておきたいこと</h3><ul class="checks">
     <li>担当サイトを v3.2 系の最新版（v3.2.39）にする</li>
@@ -1048,6 +1053,7 @@
     <li>Twig のテーマなら、メールテンプレートの記法を確認する</li>
     <li>サーバーの PHP を 8.3〜8.5 にできるか確認する</li>
     <li>.htaccess に書いた転送を洗い出しておく</li>
+    <li>テーマの JS と hx- 属性が jQuery 4・htmx 4 で動くか確認する</li>
   </ul></div>
   <div class="pageno"></div>
 </section>
@@ -1093,7 +1099,7 @@
 "26": "---\ntime: 0:25\n---\n\nCSV インポートの画面です。説明に、画像やファイルを指定する列の書き方と、取り込み元のファイルを置く場所が載っています。\n\n**「ドライラン」にチェックを入れると、保存せずに結果だけを確かめられます。**移行のリハーサルに使ってください。\n",
 "27": "---\ntime: 0:55\n---\n\n2 章の最後は、公式 Agent Skills の配布です。\n\nAI エージェントにテーマやプラグインを書かせると、a-blog cms の書き方を知らないため、そのままでは使えないコードになりがちでした。\n\n公開したスキルは 15 あり、サイト制作用、プラグイン開発用、共通の 3 つのプラグインに分けています。Claude Code のほか、Codex や GitHub Copilot、Cursor でも使えます。\n\n**入れたあとは、「お問い合わせフォームを作って」のように、いつもどおり依頼するだけです。**合うスキルをエージェントが選んで読み込みます。対象は a-blog cms の 3.2 以上です。\n",
 "28": "---\ntime: 0:30\n---\n\nここから 3 章、v3.3 の新機能です。\n\nv3.3 でやりたいのは、フィールドの形を CMS が覚えて、人からも AI からも扱えるようにすることです。\n\n変わる前提、目玉のカスタムフィールド定義と REST API、ログインまわり、運用の改善、の順に紹介します。\n\n**繰り返しになりますが、開発中の内容なので、正式リリースまでに変わることがあります。**\n",
-"29": "---\ntime: 0:40\n---\n\n最初に、v3.3 で変わる前提を 2 つお伝えします。\n\n**1 つ目は、最初にご説明した通り　v3.3 で動く PHP が 8.3 から 8.5 になることです。**PHP 8.1 と 8.2 のサポートは終える方針です。今のうちに、サーバーの PHP のバージョンを確認しておいてください。\n\n2 つ目は、Ping 送信の廃止です。ほとんど使われておらず、v3.2.0 から非推奨にしていました。独自のテーマや拡張で Ping 送信を使っている場合は、v3.3 に上げる前に外してください。\n",
+"29": "---\ntime: 0:40\n---\n\n最初に、v3.3 で変わる前提を 3 つお伝えします。\n\n**1 つ目は、最初にご説明した通り　v3.3 で動く PHP が 8.3 から 8.5 になることです。**PHP 8.1 と 8.2 のサポートは終える方針です。今のうちに、サーバーの PHP のバージョンを確認しておいてください。\n\n2 つ目は、Ping 送信の廃止です。ほとんど使われておらず、v3.2.0 から非推奨にしていました。独自のテーマや拡張で Ping 送信を使っている場合は、v3.3 に上げる前に外してください。\n\n3 つ目は、a-blog cms に同梱している jQuery と htmx のアップデートです。jQuery は 3.7 から 4.0 に、htmx は 2 系から 4 系になります。どちらも非互換の変更があるので、テーマの JavaScript や hx- 属性が v3.3 でも動くか確認してください。\n",
 "30": "---\ntime: 0:25\n---\n\nここからが v3.3 の目玉です。**1 つ目は、カスタムフィールドを管理画面で定義する機能です。**\n\n管理画面の「フィールド定義」で型を選んで並べるだけで、編集画面に入力欄が出ます。今テーマに書いているカスタムフィールドは、そのまま動きます。\n\n詳しくは、宇井さんの発表で紹介します。\n",
 "31": "---\ntime: 0:25\n---\n\n**目玉の 2 つ目は REST API です。**\n\n外部のシステムや AI から、エントリーやメディアなどを読み書きできます。標準では無効で、ユーザーごとのトークンで認証します。AI エージェントから直接つなぐ MCP サーバーも内蔵しています。\n\nこちらも詳しくは、宇井さんの発表で紹介します。\n",
 "32": "---\ntime: 0:20\n---\n\nここで、**まだ計画段階**の 2 つを紹介します。\n\nカスタムフィールドを表の形でまとめて直す Custom Field Editor と、カテゴリーを CSV からまとめて作るカテゴリーの CSV インポートです。\n\nこちらも詳しくは、宇井さんの発表で紹介します。\n",
@@ -1107,7 +1113,7 @@
 "40": "---\ntime: 0:35\n---\n\n**転送のタイミングは、標準では「ページが見つからないときだけ」です。**そのため、今表示できているページを邪魔することはありません。ページがあっても転送したいときは、「常に」を選びます。\n\n保存するときには、正規表現の書き間違い、同じルールの重複、転送のループを止めます。管理画面や API、メディアへのアクセスは転送しません。\n\nCSV での一括登録やアクセスの記録は、今回は入れていません。\n",
 "41": "---\ntime: 0:25\n---\n\nリダイレクト管理の画面です。一覧に、転送元と転送先、ステータスコード、発火のタイミングが並びます。優先順位は、左のつまみをドラッグして変えます。\n\n**詳細の画面では、正規表現のルールや、410 の終了扱いなども設定できます。**\n",
 "42": "---\ntime: 0:35\n---\n\n3 章の最後は、**計画段階**のユーザー一覧とカテゴリー一覧の改善です。\n\n今の 2 つの一覧は、並べ替えや絞り込み、まとめての操作がしにくい画面です。エントリー一覧で使っている共通の部品で作り直し、同じ操作感にする予定です。今の検索や絞り込みは、引き続き使えるようにします。\n\nまずどちらか 1 つの画面で作ってみて、様子を見ながら広げていきます。会員の多いサイトや、カテゴリーの多いサイトで効いてくる改善です。\n",
-"43": "---\ntime: 0:45\n---\n\n最後にまとめです。\n\n**まずは、担当しているサイトを v3.2.39 に更新して、ブロックメニューにグループ、埋め込み、HTML を追加してみてください。**Twig のテーマを使っている場合は、メールテンプレートに波かっこが入っていないかも確かめてください。\n\nv3.3 に向けては、サーバーの PHP を 8.3 から 8.5 にできるか、独自の拡張で Ping 送信を使っていないか、.htaccess に書いている転送がどれだけあるか、を確認しておいていただけると安心です。\n\nご清聴ありがとうございました。ご質問があればどうぞ。\n"
+"43": "---\ntime: 0:45\n---\n\n最後にまとめです。\n\n**まずは、担当しているサイトを v3.2.39 に更新して、ブロックメニューにグループ、埋め込み、HTML を追加してみてください。**Twig のテーマを使っている場合は、メールテンプレートに波かっこが入っていないかも確かめてください。\n\nv3.3 に向けては、サーバーの PHP を 8.3 から 8.5 にできるか、独自の拡張で Ping 送信を使っていないか、.htaccess に書いている転送がどれだけあるか、テーマの JavaScript や hx- 属性が jQuery 4・htmx 4 で動くか、を確認しておいていただけると安心です。\n\nご清聴ありがとうございました。ご質問があればどうぞ。\n"
 }
 </script>
 <!-- notes:end -->
